@@ -96,7 +96,7 @@ export default function App({navigation}) {
                 </View>
                 <View style={styles.up_profile}>
                     <View style={styles.up_profile_enter} >
-                        <Image style={{ width: '100%', height: '100%' }}
+                        <Image style={{ width: '100%', height: '110%' }}
                             source={profile}
                         />
                     </View>
