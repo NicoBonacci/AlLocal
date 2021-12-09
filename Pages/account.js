@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import Azienda from './Azienda';
 
-export default function App({navigation}) {
+export default function Account(props) {
   return (
     <View style={styles.container}>
       <Text>this is the account page</Text>

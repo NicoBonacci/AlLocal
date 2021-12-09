@@ -1,22 +1,27 @@
 import 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import Account from "./account";
-import Login from "./login";
-import Registrazione from "./registrazione";
 //import Home from "./Pages/Home";
 //import Azienda from "./Pages/Azienda";
-//import Account from "./Pages/account";
-//import Product from "./Pages/Product";
-//import Recensione from "./Pages/recensione";
-//import Prenota from "./Pages/prenota";
+//import Account from "./Pages/account
+
 import { StatusBar } from 'expo-status-bar';
-import { ActionBarImage ,StyleSheet, Text, View } from 'react-native';
+import { ActionBarImage ,StyleSheet,  View } from 'react-native';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackRouter } from 'react-navigation';
-//import { Feather } from 'react-native-feather';
+
+
+import React, { useEffect, useState } from 'react'
+import { Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import login from "./login";
+import registrazione from "./registrazione";
+import account from "./account";
+import { decode, encode } from 'base-64'
+import { firebase } from '../react-native-firebase/config'
+
+if (!global.btoa) { global.btoa = encode }
+if (!global.atob) { global.atob = decode }
 
 const Stack = createStackNavigator();
 
@@ -34,13 +39,45 @@ const Stack = createStackNavigator();
   );
 }*/
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
+
+    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        const usersRef = firebase.firestore().collection('users');
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                usersRef
+                    .doc(user.uid)
+                    .get()
+                    .then((document) => {
+                        const userData = document.data()
+                        setLoading(false)
+                        setUser(userData)
+                    })
+                    .catch((error) => {
+                        setLoading(false)
+                    });
+            } else {
+                setLoading(false)
+            }
+        });
+    }, []);
+
 
   return (
       <Stack.Navigator>
-        <Stack.Screen name=" " component={Account}/> 
-        <Stack.Screen name="Login" component={Login}/>
-        <Stack.Screen name="Registrazione" component={Registrazione}/> 
+          {user ? (
+              <Stack.Screen name="account">
+                  { props => <Account {...props} extraData={user} />}  
+              </Stack.Screen>
+          ) : (
+              <>
+                  <Stack.Screen name="login" component={login} />
+                      <Stack.Screen name="registratione" component={registrazione} />
+              </>
+          )}
       </Stack.Navigator>
   );
 }

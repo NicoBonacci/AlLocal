@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.expo-shared",
-    "\\assets"
+    "\\assets",
+    "\\Pages",
+    "\\photo",
+    "\\react-native-firebase"
   ],
-  "SelectedNode": "\\App.js",
+  "SelectedNode": "\\Pages\\profilenavigator.js",
   "PreviewInSolutionExplorer": false
 }
