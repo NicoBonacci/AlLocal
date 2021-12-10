@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets",
     "\\Pages",
     "\\photo",
     "\\react-native-firebase"
   ],
-  "SelectedNode": "\\Pages\\profilenavigator.js",
+  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }
