@@ -16,7 +16,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import login from "./login";
 import registrazione from "./registrazione";
-import account from "./account";
+import Account from "./account";
 import { decode, encode } from 'base-64'
 import { firebase } from '../react-native-firebase/config'
 
