@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button } from 'react-native';
 
 import logo from '../assets/AllLocal_logo.png';
 import home from '../assets/HomeLogo.png';
 
-import Azienda from './Azienda';
+
+import { getAuth, updatePassword } from "firebase/auth";
 
 export default function Account(props) {
     const [oneChange, setOneChange] = useState(false);
@@ -13,12 +14,28 @@ export default function Account(props) {
     //Prodotti se azienda recensioni se utente
     const [varNameList, setVarNameList] = useState('Recensioni');
 
+    const [password, setPassword] = useState('')
+
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+
 
     if (props.extraData.isCompany == 'Yes' && oneChange == false) {
         setOneChange(true)
         setVarNameList('Prodotti')
     }
 
+    const onChangePasswordPress = () => {
+        updatePassword(user, password).then(() => {
+            alert("Your password has been updated");
+            console.log("Cambiata password in %s", password)
+        }).catch((error) => {
+            alert(error)
+        });
+
+    }
 
 
     return (
@@ -35,10 +52,26 @@ export default function Account(props) {
             </View>
             <View style={styles.main_center}>
                 <View style={styles.center_name}>
-                    <Text>Hi {props.extraData.fullName}</Text>
+                    <Text style={{fontSize: 15}}>Hi {props.extraData.fullName}</Text>
                 </View>
                 <View style={styles.center_changePassword}>
-                    <Button title="Change password" />
+
+                    <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 10, marginTop: 10 }}>Change your password!</Text>
+
+                    <View style={styles.center_changePasswordBox}>
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor="#aaaaaa"
+                            secureTextEntry
+                            placeholder='Insert new password'
+                            onChangeText={(text) => setPassword(text)}
+                            value={password}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <Button title="Change password" onPress={() => onChangePasswordPress()} />
+                    </View>
+
                 </View>
             </View>
             <View style={styles.main_down}>
@@ -101,28 +134,29 @@ const styles = StyleSheet.create({
     },
     main_center: {
         width: '100%',
-        height: '20%',
+        height: '23%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     center_name: {
-        flex: 1,
         width: '95%',
-        height: '45%',
+        height: '25%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     center_changePassword: {
-        flex: 1,
         width: '95%',
-        height: '45%',
-        justifyContent: 'center',
-        alignItems: 'center',
-
+        height: '75%',
     },
+    center_changePasswordBox: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 10,
+     },
     main_down: {
         width: '100%',
-        height: '73%',
+        height: '70%',
         padding: 20,
     },
     down_Text: {
@@ -144,6 +178,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 5,
     },
-
-
+    input: {
+        height: '100%',
+        width: '45%',
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 15,
+        paddingLeft: 16
+    },
 });
