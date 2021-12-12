@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, View, Image, Text, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from "expo-location";
+import { LogBox } from 'react-native';
 
 
 
@@ -29,6 +30,10 @@ export default function App({navigation}) {
     const [showDetails, setShowDetails] = useState(false);
     const [companyName, setCompanyName] = useState('');
     const [urlOfImage, setUrlImage] = useState('');
+
+
+    //ignora il problema AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage
+    LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release.']);
 
     //controlla se ho l'accesso per ricevere i dati dal gps
     useEffect(() => {

@@ -1,17 +1,37 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { Platform } from 'react-native';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyD16Em3cB5TbUdfE6JCFaeAnCcZfJ7EAM8",
-    authDomain: "ordinal-mote-333411.firebaseapp.com",
-    databaseURL: "https://ordinal-mote-333411.firebaseio.com",
-    projectId: "ordinal-mote-333411",
-    storageBucket: "ordinal-mote-333411.appspot.com",
-    messagingSenderId: "730233490713",
-    appId: "1:730233490713:ios:16f6fd6ea1ef0263ba4988",
-};
 
-app = firebase.initializeApp(firebaseConfig)
+
+if (Platform.OS === 'ios') {
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBNmEhhJfpcLIHePMfmvt8g- etv7dB9w5s",
+        authDomain: "allocal.firebaseapp.com",
+        databaseURL: "https://allocal.firebaseio.com",
+        projectId: "allocal",
+        storageBucket: "allocal.appspot.com",
+        messagingSenderId: "240425908193",
+        appId: "1:240425908193:ios:03e402db60637a7ef904a0",
+    };
+    app = firebase.initializeApp(firebaseConfig)
+
+} else {
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBNmEhhJfpcLIHePMfmvt8g-etv7dB9w5s",
+        authDomain: "allocal.firebaseapp.com",
+        databaseURL: "https://allocal.firebaseio.com",
+        projectId: "allocal",
+        storageBucket: "allocal.appspot.com",
+        messagingSenderId: "240425908193",
+        appId: "1:240425908193:android:638223df073e0dd0f904a0",
+    };
+    app = firebase.initializeApp(firebaseConfig)
+}
+
 
 export { firebase };

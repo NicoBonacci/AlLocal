@@ -1,15 +1,48 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Button } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../react-native-firebase/config'
+import * as Facebook from 'expo-facebook';
 
 export default function login({ navigation }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const appId = '947901972794896';
 
     const onFooterLinkPress = () => {
         navigation.navigate('registratione')
     }
+
+    const onLoginFacebookPress = async () => {
+        try {
+   
+            await Facebook.initializeAsync({
+                appId: '947901972794896'
+            }) // enter your Facebook App Id
+            const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile', 'email'],
+            });
+            if (type === 'success') {
+                // SENDING THE TOKEN TO FIREBASE TO HANDLE AUTH
+                console.log(token);
+                const credential = firebase.auth.FacebookAuthProvider.credential(token);
+                console.log(credential);
+                firebase.auth().signInWithCredential(credential)
+                    .then(user => { // All the details about user are in here returned from firebase
+                        console.log('Logged in successfully', user)
+                    })
+                    .catch((error) => {
+                        console.log('Error occurred ', error)
+                    });
+            } else {
+                // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+        }
+    }
+
+
 
     const onLoginPress = () => {
         firebase
@@ -74,6 +107,7 @@ export default function login({ navigation }) {
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
                 </View>
+                <Button full rounded title="Login with Facebook" onPress={() => onLoginFacebookPress()} />
             </KeyboardAwareScrollView>
         </View>
     )
