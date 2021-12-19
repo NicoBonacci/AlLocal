@@ -12,31 +12,32 @@ export default function App({ navigation }) {
         <View style={styles.container}>
 
             <View style={styles.containerName}>
-                <Text style={styles.nameText}>NOME DEL PRODOTTO</Text>
+                <Text style={styles.nameText}>Caramelle al miele</Text>
             </View>
 
             <View style={styles.containerBio}>
                 <View style={styles.imageRow} >
-                    <Image source={require('../photo/foto.jpg')}
+                    <Image source={require('../assets/caramelle.png')}
                         style={styles.image}>
 
                     </Image>
                     <ScrollView>
                         <Text style={styles.prodottoText}>
-                            okfedbimfiodnbsionviosnbosnfb{"\n"}fodksbovijsmfpobvspbposksfbvs
-                            {"\n"}wdsvmspbvmwsdpvwpsdmvpsd{"\n"}wsdvkmbwvsdmpvowmdspvo{"\n"}
-                            sdvmopwmsdvpmw,sdpov,wsd{"\n"}sdvkmwpsdvmpowsdmvmosdmèv{"\n"}sdkv
-                            mklsfm ksmf p,fd{"\n"}dsv,pskmvkndfj sfonvosk{"\n"}sfbmbòsà,èbs,
-                            às àòfèsd ,efd bo{"\n"}efbsdko mfsdpbmòfs{"\n"}fb scklxòbm òkfsd
-                            bpòfsd{"\n"}sflbkl fsdkò òlmsfòà, às,d{"\n"}
-                            {"\n"}
-                            voto: 4,23
+                            Le nostre caramelle al miele contengono i seguenti ingredienti
+                            {"\n"}{"\n"}
+                            Ingredienti: zucchero, sciroppo di glucosio, miele 10%
+                            {"\n"}{"\n"}
+                            Possibili tracce di sesamo.
+                            {"\n"}{"\n"}
+                            Senza glutine
+                            {"\n"}{"\n"}
+                            voto: 4,00
                         </Text>
                     </ScrollView>
                 </View>
             </View>
             <View style={styles.titolorec}>
-                <Text style={styles.textRecensione}>Recensioni: </Text>
+                <Text style={styles.titleRecesioni}>Review: </Text>
             </View>
             <View style={styles.containerRecensioni}>
                 <View style={styles.containerRow}>
@@ -44,25 +45,22 @@ export default function App({ navigation }) {
                         <ScrollView horizontal>
                             <View style={styles.containerRec}>
                                 <Text style={styles.textRecensione}>
-                                    Nome utente {"\n"}enfvjnwiofbniownviwndvowndvionwiov{"\n"}
-                                    wfjvoiwvsmwdpvmwèvkwsdvmwdsv{"\n"}valutazione: {"\n"}4/5
+                                    Mario Rossi {"\n"}{"\n"}Queste caramelle mi sono piaciute molto!{"\n"}{"\n"}Valutazione: {"\n"}4/5
                                 </Text>
 
                             </View>
 
                             <View style={styles.containerRec}>
                                 <Text style={styles.textRecensione}>
-                                    Nome utente {"\n"}enfvjnwiofbniownviwndvowndvionwiov{"\n"}
-                                    wfjvoiwvsmwdpvmwèvkwsdvmwdsv{"\n"}valutazione: {"\n"}4/5
+                                    Luigi Bianchi {"\n"}{"\n"}Buone, ma ne ho mangiate delle più buone{"\n"}{"\n"}Valutazione: {"\n"}3/5
                                 </Text>
 
                             </View>
 
                             <View style={styles.containerRec}>
                                 <Text style={styles.textRecensione}>
-                                    Nome utente {"\n"}enfvjnwiofbniownviwndvowndvionwiov{"\n"}
-                                    wfjvoiwvsmwdpvmwèvkwsdvmwdsv{"\n"}valutazione: {"\n"}4/5
-                                </Text>
+                                    Maria Neri {"\n"}{"\n"}Le ricomprerò{"\n"}{"\n"}Valutazione: {"\n"}5/5
+                                 </Text>
 
                             </View>
 
@@ -73,13 +71,13 @@ export default function App({ navigation }) {
             </View>
 
             <View style={styles.containerButton}>
-                <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor:'green' }}>
-                    <Button title="fai recensione" onPress={() => navigation.navigate('Recensione')}
+                <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor:'lime' }}>
+                    <Button title="Do a review" onPress={() => navigation.navigate('Review')}
                     color="#841584"/>
                 </View>
 
                 <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                    <Button title="prenota" onPress={() => navigation.navigate('Prenota')}/>
+                    <Button title="Reserve" onPress={() => navigation.navigate('Reserve')}/>
                 </View>
 
                 
@@ -116,6 +114,8 @@ const styles = StyleSheet.create({
     },
     imageRow: {
         flex: 1,
+        marginLeft: 5,
+        marginTop: 5,
         flexDirection: 'row',
     },
     prodottoText: {
@@ -149,8 +149,18 @@ const styles = StyleSheet.create({
     },
     textRecensione: {
         color: '#121212',
-        fontSize: 20,
+        fontSize: 17,
+        marginTop: 5,
         textAlign: 'center'
+    },
+    titleRecesioni: {
+        color: "#121212",
+        fontSize: 30,
+        marginTop: 15,
+        //marginLeft: 8
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
     },
     containerButton: {
         flex: 1,

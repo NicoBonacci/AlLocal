@@ -9,33 +9,22 @@ export default function App({ navigation }) {
 
         <View style={styles.container}>
             <View style={styles.rectNomeAzienda}>
-                <Text style={styles.nomeAzienda}>NOME AZIENDA</Text>
+                <Text style={styles.nomeAzienda}>Miele Mio</Text>
             </View>
 
             <View style={styles.rectdescrizioneAzienda}>
                 <ScrollView>
                     <Text style={styles.testoDescrizione}>
-                        DESCRIOZONE AZIENDA: {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
-                        {"\n"}wdvsjwiosdvjpowjvpowes{"\n"}wvdjsviojwepovkwepèsd{"\n"}
-                        wvdsojvoèweksvpèw7wevksdpovkwepè{"\n"}evwpdksvpwes{"\n"}wevsdpovwepèsd
-                        {"\n"}vwekdsoòvkwes{"\n"}wevsdpvkweèseuifbrbvnuvbervubweuvbiwvbwrv
-                        {"\n"} jrifhuigherihgihgih3489gij30whgjihjwg092jwefoj2iweogjwpogjw
-                        {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
-                        {"\n"}wdvsjwiosdvjpowjvpowes{"\n"}wvdjsviojwepovkwepèsd{"\n"}
-                        wvdsojvoèweksvpèw7wevksdpovkwepè{"\n"}evwpdksvpwes{"\n"}wevsdpovwepèsd
-                        {"\n"}vwekdsoòvkwes{"\n"}wevsdpvkweèseuifbrbvnuvbervubweuvbiwvbwrv
-                        {"\n"} jrifhuigherihgihgih3489gij30whgjihjwg092jwefoj2iweogjwpogjw
-                        {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
-                        {"\n"}wdvsjwiosdvjpowjvpowes{"\n"}wvdjsviojwepovkwepèsd{"\n"}
-                        wvdsojvoèweksvpèw7wevksdpovkwepè{"\n"}evwpdksvpwes{"\n"}wevsdpovwepèsd
-                        {"\n"}vwekdsoòvkwes{"\n"}wevsdpvkweèseuifbrbvnuvbervubweuvbiwvbwrv
-                        {"\n"} jrifhuigherihgihgih3489gij30whgjihjwg092jwefoj2iweogjwpogjw
+                        L’Azienda Miele mio nasce nel 2010 da una brillante intuizione di Gianfranco che, apprezzando le potenzialità della zona e la propensione della propria famiglia nello sviluppare un’attività per la valorizzazione del territorio, propone di dar vita a un progetto agricolo.
+                        {"\n"}{"\n"}
+                        Grazie alle grandi passioni per l’apicoltura del figlio Andrea e per la coltivazione delle erbe officinali della moglie Maria Luisa, nasce l’Azienda Agricola Miele Mio dedicata alla produzione miele.
+                        {"\n"}{"\n"}L’Azienda è nata dall’unione di due elementi: l’amore per la natura e la passione per l’apicoltura; infatti, Andrea, nonostante un’avviata carriera di architetto, decide di ritornare alla terra e di investire tutto nell’azienda agricola, rincorrendo così il suo sogno di vivere e lavorare a contatto con la natura e col mondo meraviglioso delle api.
                     </Text>
                 </ScrollView>
             </View>
 
             <View style={styles.titoloProdotti}>
-                <Text style={styles.testoDescrizione}>Product:</Text>
+                <Text style={styles.testoProduct}>Product:</Text>
             </View>
 
 
@@ -49,13 +38,8 @@ export default function App({ navigation }) {
                                 style={styles.rectContenutoProdotto}
                                 onPress={() => navigation.navigate('Product')}>
 
-                                <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5 }}>
-                                    {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
-                                    {"\n"}wdvsjwiosdvjpowjvpowes{"\n"}wvdjsviojwepovkwepèsd{"\n"}
-                                    wvdsojvoèweksvpèw7wevksdpovkwepè{"\n"}evwpdksvpwes{"\n"}wevsdpovwepèsd
-                                    {"\n"}vwekdsoòvkwes{"\n"}wevsdpvkweèseuifbrbvnuvbervubweuvbiwvbwrv
-                                    {"\n"} jrifhuigherihgihgih3489gij30whgjihjwg092jwefoj2iweogjwpogjw
-                                    {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
+                                <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5, fontSize: 30 }}>
+                                    {"\n"}{"\n"}                 Miele Bio
                                 </Text>
 
                             </TouchableOpacity>
@@ -64,13 +48,8 @@ export default function App({ navigation }) {
                                 style={styles.rectContenutoProdotto}
                                 onPress={() => navigation.navigate('Product')}>
 
-                                        <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5 }}>
-                                            {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
-                                            {"\n"}wdvsjwiosdvjpowjvpowes{"\n"}wvdjsviojwepovkwepèsd{"\n"}
-                                            wvdsojvoèweksvpèw7wevksdpovkwepè{"\n"}evwpdksvpwes{"\n"}wevsdpovwepèsd
-                                            {"\n"}vwekdsoòvkwes{"\n"}wevsdpvkweèseuifbrbvnuvbervubweuvbiwvbwrv
-                                            {"\n"} jrifhuigherihgihgih3489gij30whgjihjwg092jwefoj2iweogjwpogjw
-                                            {"\n"}cdskvjiowviowjviewjgiovhwrpovjweiojviwev
+                                <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5, fontSize: 30 }}>
+                                    {"\n"}{"\n"}        Caramelle al Miele
                                         </Text>
 
                             </TouchableOpacity>
@@ -108,7 +87,6 @@ const styles = StyleSheet.create({
         //marginLeft: 34
     },
     nomeAzienda: {
-        fontFamily: "roboto-700italic",
         color: "#121212",
         fontSize: 34,
         textAlign: "center",
@@ -128,10 +106,19 @@ const styles = StyleSheet.create({
 
     },
     testoDescrizione: {
-        fontFamily: "roboto-regular",
         color: "#121212",
         fontSize: 15,
         marginTop: 10,
+        //marginLeft: 8
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+
+    },
+    testoProduct: {
+        color: "#121212",
+        fontSize: 30,
+        marginTop: 15,
         //marginLeft: 8
         marginBottom: 10,
         marginLeft: 10,

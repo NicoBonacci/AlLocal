@@ -48,11 +48,11 @@ export default function App({navigation}) {
       backgroundColor: 'black',
     },
   })}*//>
-        <Stack.Screen name="Azienda" component={Azienda}/>
+        <Stack.Screen name="Company" component={Azienda}/>
         {/*<Stack.Screen name="Account" component={Account}/>*/}
         <Stack.Screen name="Product" component={Product}/>
-        <Stack.Screen name="Recensione" component={Recensione}/>
-        <Stack.Screen name="Prenota" component={Prenota}/>
+          <Stack.Screen name="Review" component={Recensione}/>
+        <Stack.Screen name="Reserve" component={Prenota}/>
       </Stack.Navigator>
   );
 

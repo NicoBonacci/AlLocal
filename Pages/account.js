@@ -40,19 +40,10 @@ export default function Account(props) {
 
     return (
         <SafeAreaView style={styles.container_main}>
-            <View style={styles.main_up}>
-                <View style={styles.up_logo}>
-                    <Image style={{ width: '31%', height: '100%' }}
-                        source={logo} />
-                </View>
-                <View style={styles.up_home}>
-                    <Image style={{ width: '31%', height: '100%' }}
-                        source={home} />
-                </View>
-            </View>
+
             <View style={styles.main_center}>
                 <View style={styles.center_name}>
-                    <Text style={{fontSize: 15}}>Hi {props.extraData.fullName}</Text>
+                    <Text style={{fontSize: 20}}>Hi {props.extraData.fullName}</Text>
                 </View>
                 <View style={styles.center_changePassword}>
 
@@ -81,21 +72,21 @@ export default function Account(props) {
                 <View style={styles.Down_prod_rec}>
                     <View style={styles.down_Container_prod_rec}>
                         <View style={styles.TextRev_Prod}>
-                            <Text>Rec1</Text>
+                            <Text>Ho comprato questo prodotto piu' d...</Text>
                         </View>
                         <Button title="Edit" />
                         <Button title="X" />
                     </View>
                     <View style={styles.down_Container_prod_rec}>
                         <View style={styles.TextRev_Prod}>
-                            <Text>Rec2</Text>
+                            <Text>Questo azienda e' sinonimo di qualit..</Text>
                         </View>
                         <Button title="Edit" />
                         <Button title="X" />
                     </View>
                     <View style={styles.down_Container_prod_rec}>
                         <View style={styles.TextRev_Prod}>
-                            <Text>Rec3</Text>
+                            <Text>Azienda top</Text>
                         </View>
                         <Button title="Edit" />
                         <Button title="X" />
@@ -134,7 +125,8 @@ const styles = StyleSheet.create({
     },
     main_center: {
         width: '100%',
-        height: '23%',
+        height: '28%',
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -143,6 +135,7 @@ const styles = StyleSheet.create({
         height: '25%',
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 10,
     },
     center_changePassword: {
         width: '95%',
@@ -156,7 +149,7 @@ const styles = StyleSheet.create({
      },
     main_down: {
         width: '100%',
-        height: '70%',
+        height: '72%',
         padding: 20,
     },
     down_Text: {

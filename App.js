@@ -12,7 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ActionBarImage, StyleSheet, Text, View } from 'react-native';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackRouter } from 'react-navigation';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const Stack = createStackNavigator();
@@ -21,7 +21,23 @@ const Tab = createBottomTabNavigator();
 export default function App({ navigation }) {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+          <Tab.Navigator
+              screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
+                  if (route.name === 'Home') {
+                      iconName = focused
+                          ? 'ios-information-circle'
+                          : 'ios-information-circle-outline';
+                  } else if (route.name === 'Account') {
+                      iconName = focused ? 'ios-list' : 'ios-list-outline'
+                  }
+                  return <Ionicons name={iconName} size={size} color={color} />;
+              },
+              tabBarActiveTintColor: 'green',
+              tabBarInactiveTintColor: 'gray'
+          })}
+          >
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Account" component={Account} />
       </Tab.Navigator>

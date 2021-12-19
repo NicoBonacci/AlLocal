@@ -4,12 +4,15 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from "expo-location";
 import { LogBox } from 'react-native';
 
+import { firebase } from '../react-native-firebase/config'
 
 
 import logo from '../assets/AllLocal_logo.png';
 import profile from '../assets/iconProfile.png';
 import azienda1 from '../assets/azienda1.png';
-import azienda2 from '../assets/azienda2.png';
+import azienda2 from '../assets/dole.png';
+import azienda3 from '../assets/mielemio.png';
+import azienda4 from '../assets/casaDelleCarta.png';
 import locationIcon from '../assets/locationIcon.png';
 
 export default function App({navigation}) {
@@ -18,6 +21,9 @@ export default function App({navigation}) {
 
     //var che serve per fare il render solo una volta quando ho i dati del gps altrimenti entra in loop perch� continua a salvare i dati del gps in location
     const [locUnavailable, setLocUnavailable] = useState(0);
+
+
+
 
     //var in cui ho la lat long della posizione della mappa
     const [mapRegion, setmapRegion] = useState({
@@ -31,9 +37,15 @@ export default function App({navigation}) {
     const [companyName, setCompanyName] = useState('');
     const [urlOfImage, setUrlImage] = useState('');
 
+    const [Allmarkets, setAllMarkets] = useState([]);
+    //Scarica i dati dal db una volta sola
+    const [downloadMarket, setDownloadMarket] = useState(false);
 
     //ignora il problema AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage
     LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release.']);
+
+    //ignora il problema each child in a list should... per allMarket.maps quando vado a disegnare i marker in modo iterativo sulla mappa non hanno una key specifica
+    LogBox.ignoreLogs(['Each child in a list should have a unique "key" prop.']);
 
     //controlla se ho l'accesso per ricevere i dati dal gps
     useEffect(() => {
@@ -63,6 +75,32 @@ export default function App({navigation}) {
         method: 'GET',
     };
 
+    useEffect(() => {
+        if (downloadMarket == false) {
+            firebase.firestore().collection('users')
+                .get()
+                .then(snapshot => {
+                    const market = [];
+                    snapshot
+                        .docs
+                        .forEach(doc => {
+                            if (doc._delegate._document.data.value.mapValue.fields.isCompany.stringValue == 'Yes') {
+                                market.push({
+                                    id: doc._delegate._document.data.value.mapValue.fields.id.stringValue,
+                                    fullName: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
+                                    coordination: {
+                                        latitude: doc._delegate._document.data.value.mapValue.fields.addressLatitude.doubleValue,
+                                        longitude: doc._delegate._document.data.value.mapValue.fields.addressLongitude.doubleValue
+                                    }
+                                });
+
+                            }
+                        });
+                    setAllMarkets(market);
+                });
+            setDownloadMarket(true);
+        }
+    });
     return (
         <View style={styles.main}>
             <View style={styles.up}>
@@ -99,13 +137,7 @@ export default function App({navigation}) {
                             } />
                     </View>
                 </View>
-                <View style={styles.up_profile}>
-                    <View style={styles.up_profile_enter} >
-                        <Image style={{ width: '100%', height: '110%' }}
-                            source={profile}
-                        />
-                    </View>
-                </View>
+
             </ View>
             <View style={styles.center} >
 
@@ -136,18 +168,34 @@ export default function App({navigation}) {
                         ><Image source={locationIcon}
                             style={{ height: 20, width: 20 }} /></Marker> : null
                     }
-                    {
-                        //market inseriti manualmente di prova da mettere un ciclo for quando ho i dati nel db
+
+                    
+                    { Allmarkets ? Allmarkets.map((market) => (
+                        <Marker coordinate={market.coordination}
+                            title={market.fullName}
+                            onPress={() => {
+                                setShowDetails(true)
+                                setCompanyName(market.fullName)
+                                setUrlImage(azienda1)
+                            }
+                            }
+                        />
+
+                     )) : null
                     }
+
+                    {//market inseriti manualmente di prova da mettere un ciclo for quando ho i dati nel db
+                    }
+
                     <Marker coordinate={{
                         latitude: 45.49352339375695,
                         longitude: 9.218693011821031,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }} title='Azienda1'
+                    }} title='Fattoria Franco'
                         onPress={() => {
                             setShowDetails(true)
-                            setCompanyName('Azienda1')
+                            setCompanyName('Fattoria Franco')
                             setUrlImage(azienda1)
                         }
                         }
@@ -157,9 +205,9 @@ export default function App({navigation}) {
                         longitude: 9.171373124395622,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }} title='Azienda2' onPress={() => {
+                    }} title='Dole' onPress={() => {
                         setShowDetails(true)
-                        setCompanyName('Azienda2')
+                        setCompanyName('Dole')
                         setUrlImage(azienda2)
 
                     }
@@ -170,11 +218,11 @@ export default function App({navigation}) {
                         longitude: 9.147855515051386,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }} title='Azienda3'
+                    }} title='Casa della carta'
                         onPress={() => {
                             setShowDetails(true)
-                            setCompanyName('Azienda3')
-                            setUrlImage(azienda2)
+                            setCompanyName('Casa della carta')
+                            setUrlImage(azienda4)
                         }
                         }
                     />
@@ -183,11 +231,11 @@ export default function App({navigation}) {
                         longitude: 9.211026903654878,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }} title='Azienda4'
+                    }} title='Miele mio'
                         onPress={() => {
                             setShowDetails(true)
-                            setCompanyName('Azienda4')
-                            setUrlImage(azienda2)
+                            setCompanyName('Miele mio')
+                            setUrlImage(azienda3)
                         }
                         }
                     />
@@ -196,7 +244,7 @@ export default function App({navigation}) {
             </View>
             <View style={styles.down}>
 
-                {showDetails ? <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda')}>
+                {showDetails ? <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Company')}>
                     <Text style={styles.textCompany}>{companyName}</Text>
                     <Image style={styles.picCompanyDimension} source={urlOfImage}/>
                 </TouchableOpacity> : null}
@@ -246,17 +294,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     up_search: {
-        width: '60%',
+        width: '80%',
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
 
-    },
-    up_profile: {
-        width: '25%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     down_company: {
 
@@ -270,18 +312,13 @@ const styles = StyleSheet.create({
     up_logo_enter: {
 
         width: '100%',
-        height: '60%',
+        height: '70%',
 
     },
     up_search_enter: {
 
         width: '100%',
         height: '40%',
-    },
-    up_profile_enter: {
-
-        width: '40%',
-        height: '30%',
     },
     searchBar: {
         borderRadius: 10,
@@ -303,6 +340,7 @@ const styles = StyleSheet.create({
 
     },
     picCompanyDimension: {
+        marginTop: 15,
         width: '50%',
         height: '50%',
     }

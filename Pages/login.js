@@ -10,7 +10,7 @@ export default function login({ navigation }) {
     const appId = '947901972794896';
 
     const onFooterLinkPress = () => {
-        navigation.navigate('registratione')
+        navigation.navigate('Registration')
     }
 
     const onLoginFacebookPress = async () => {
@@ -43,7 +43,7 @@ export default function login({ navigation }) {
     }
 
 
-
+    
     const onLoginPress = () => {
         firebase
             .auth()
@@ -107,7 +107,8 @@ export default function login({ navigation }) {
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
                 </View>
-                <Button full rounded title="Login with Facebook" onPress={() => onLoginFacebookPress()} />
+                { // <Button full rounded title="Login with Facebook" onPress={() => onLoginFacebookPress()} />
+                }
             </KeyboardAwareScrollView>
         </View>
     )
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     logo: {
         flex: 1,
         height: 120,
-        width: 90,
+        width: 130,
         alignSelf: "center",
         margin: 30
     },

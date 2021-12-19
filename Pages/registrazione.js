@@ -11,8 +11,15 @@ export default function registration({ navigation }) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [address, setAdress] = useState('')
+    const [addressLatitude, setAdressLatitude] = useState('')
+    const [addressLongitude, setAdressLongitude] = useState('')
+
     const [isCompany, setIsCompany] = useState('No')
     const [seeAddress, setSeeAddress] = useState(false)
+
+    var requestOptions = {
+        method: 'GET',
+    };
 
     const valueButton = [
         { label: 'Yes', value: 'Yes' },
@@ -24,6 +31,20 @@ export default function registration({ navigation }) {
             alert("Passwords don't match.")
             return
         }
+
+        if (isCompany == 'Yes') {
+          
+            fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=e5e4640f03c147c58545023a81e1b8e1", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setAdressLatitude(result.features[0].geometry.coordinates[1]);
+                    setAdressLongitude(result.features[0].geometry.coordinates[0]);
+                })
+                .catch(error => console.log('error', error));
+
+        }
+
+
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
@@ -34,7 +55,9 @@ export default function registration({ navigation }) {
                     email,
                     fullName,
                     isCompany,
-                    address
+                    address,
+                    addressLatitude,
+                    addressLongitude,
                 };
                 const usersRef = firebase.firestore().collection('users')
                 usersRef
@@ -156,58 +179,58 @@ title: {
 },
 logo: {
     flex: 1,
-        height: 120,
-            width: 90,
-                alignSelf: "center",
-                    margin: 30
+    height: 120,
+    width: 130,
+    alignSelf: "center",
+    margin: 30
 },
 input: {
     height: 48,
-        borderRadius: 5,
-            overflow: 'hidden',
-                backgroundColor: 'white',
-                    marginTop: 10,
-                        marginBottom: 10,
-                            marginLeft: 30,
-                                marginRight: 30,
-                                    paddingLeft: 16
+    borderRadius: 5,
+    overflow: 'hidden',
+    backgroundColor: 'white',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 16
 },
 button: {
     backgroundColor: '#788eec',
-        marginLeft: 30,
-            marginRight: 30,
-                marginTop: 20,
-                    height: 48,
-                        borderRadius: 5,
-                            alignItems: "center",
-                                justifyContent: 'center'
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    height: 48,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: 'center'
 },
 buttonTitle: {
     color: 'white',
-        fontSize: 16,
-            fontWeight: "bold"
+    fontSize: 16,
+    fontWeight: "bold"
 },
 radioButton: {
     paddingLeft: '5%',
-        paddingTop: '5%',
-            paddingRight: '5%'
+    paddingTop: '5%',
+    paddingRight: '5%'
 },
 radioButtonInside: {
     paddingLeft: '25%',
-        paddingRight: '25%',
+     paddingRight: '25%',
     },
 footerView: {
     flex: 1,
-        alignItems: "center",
-            marginTop: 20
+    alignItems: "center",
+     marginTop: 20
 },
 footerText: {
     fontSize: 16,
-        color: '#2e2e2d'
+    color: '#2e2e2d'
 },
 footerLink: {
     color: "#788eec",
-        fontWeight: "bold",
-            fontSize: 16
+    fontWeight: "bold",
+    fontSize: 16
 }
 });

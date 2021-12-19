@@ -69,13 +69,13 @@ export default function App({ navigation }) {
   return (
       <Stack.Navigator>
           {user ? (
-              <Stack.Screen name="account">
+              <Stack.Screen name="Account">
                   { props => <Account {...props} extraData={user} />}  
               </Stack.Screen>
           ) : (
               <>
-                  <Stack.Screen name="login" component={login} />
-                      <Stack.Screen name="registratione" component={registrazione} />
+                  <Stack.Screen name="Login" component={login} />
+                      <Stack.Screen name="Registration" component={registrazione} />
               </>
           )}
       </Stack.Navigator>
