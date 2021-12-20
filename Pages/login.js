@@ -10,7 +10,7 @@ export default function login({ navigation }) {
     const appId = '947901972794896';
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
+        navigation.navigate('registrazione')
     }
 
     const onLoginFacebookPress = async () => {

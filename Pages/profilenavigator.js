@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 //import Account from "./Pages/account
 
 import { StatusBar } from 'expo-status-bar';
-import { ActionBarImage ,StyleSheet,  View } from 'react-native';
+import { ActionBarImage, StyleSheet, View } from 'react-native';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackRouter } from 'react-navigation';
 
@@ -41,44 +41,49 @@ const Stack = createStackNavigator();
 
 export default function App({ navigation }) {
 
-    const [loading, setLoading] = useState(true)
-    const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
 
-    useEffect(() => {
-        const usersRef = firebase.firestore().collection('users');
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                usersRef
-                    .doc(user.uid)
-                    .get()
-                    .then((document) => {
-                        const userData = document.data()
-                        setLoading(false)
-                        setUser(userData)
-                    })
-                    .catch((error) => {
-                        setLoading(false)
-                    });
-            } else {
-                setLoading(false)
-            }
-        });
-    }, []);
+  useEffect(() => {
+    const usersRef = firebase.firestore().collection('users');
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            const userData = document.data()
+            setLoading(false)
+            setUser(userData)
+          })
+          .catch((error) => {
+            setLoading(false)
+          });
+      } else {
+        setLoading(false)
+      }
+    });
+  }, []);
 
 
   return (
-      <Stack.Navigator>
-          {user ? (
-              <Stack.Screen name="Account">
-                  { props => <Account {...props} extraData={user} />}  
-              </Stack.Screen>
-          ) : (
-              <>
-                  <Stack.Screen name="Login" component={login} />
-                      <Stack.Screen name="Registration" component={registrazione} />
-              </>
-          )}
-      </Stack.Navigator>
+    <Stack.Navigator>
+      {user ? (
+        <>
+          <Stack.Screen name="account">
+            {props => <Account {...props} extraData={user} />}
+          </Stack.Screen>
+          <Stack.Screen name="Aggiungi prodotto">
+            {props => <AggiungiProdotto {...props} extraData={user} />}
+          </Stack.Screen>
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="login" component={login} />
+          <Stack.Screen name="registrazione" component={registrazione} />
+        </>
+      )}
+    </Stack.Navigator>
   );
 }
 
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
   icon: {
     paddingLeft: 10,
   },
-  iconContainer:{
+  iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: 120,

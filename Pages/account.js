@@ -1,32 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView } from 'react-native';
 
 import logo from '../assets/AllLocal_logo.png';
 import home from '../assets/HomeLogo.png';
 
+import { firebase } from '../react-native-firebase/config';
+
+import recensione from '../fromDatabase/recensioniFromDb';
+
 
 import { getAuth, updatePassword } from "firebase/auth";
+import { QuerySnapshot } from 'firebase/firestore';
+
+import RecensioniFromDb from '../fromDatabase/recensioniFromDb';
+import ProdottiFromDb from '../fromDatabase/prodottiFromDb';
+import recensioniFromDb, * as recensioni from '../fromDatabase/recensioniFromDb';
 
 export default function Account(props) {
     const [oneChange, setOneChange] = useState(false);
 
     //Prodotti se azienda recensioni se utente
     const [varNameList, setVarNameList] = useState('Recensioni');
-
-    const [password, setPassword] = useState('')
-
+    const [password, setPassword] = useState('');
+    const [isuser, setIsUser] = useState(true);
 
     const auth = getAuth();
     const user = auth.currentUser;
 
-
-
     if (props.extraData.isCompany == 'Yes' && oneChange == false) {
-        setOneChange(true)
-        setVarNameList('Prodotti')
+        setOneChange(true);
+        setVarNameList('Prodotti');
+        setIsUser(false);
     }
-
     const onChangePasswordPress = () => {
         updatePassword(user, password).then(() => {
             alert("Your password has been updated");
@@ -37,13 +43,22 @@ export default function Account(props) {
 
     }
 
-
     return (
-        <SafeAreaView style={styles.container_main}>
 
+        <SafeAreaView style={styles.container_main}>
+            <View style={styles.main_up}>
+                <View style={styles.up_logo}>
+                    <Image style={{ width: '31%', height: '100%' }}
+                        source={logo} />
+                </View>
+                <View style={styles.up_home}>
+                    <Image style={{ width: '31%', height: '100%' }}
+                        source={home} />
+                </View>
+            </View>
             <View style={styles.main_center}>
                 <View style={styles.center_name}>
-                    <Text style={{fontSize: 20}}>Hi {props.extraData.fullName}</Text>
+                    <Text style={{ fontSize: 15 }}>Hi {props.extraData.fullName}</Text>
                 </View>
                 <View style={styles.center_changePassword}>
 
@@ -65,34 +80,37 @@ export default function Account(props) {
 
                 </View>
             </View>
-            <View style={styles.main_down}>
-                <View style={styles.down_Text}>
-                    <Text>{varNameList}</Text>
-                </View>
-                <View style={styles.Down_prod_rec}>
-                    <View style={styles.down_Container_prod_rec}>
-                        <View style={styles.TextRev_Prod}>
-                            <Text>Ho comprato questo prodotto piu' d...</Text>
-                        </View>
-                        <Button title="Edit" />
-                        <Button title="X" />
+
+            {isuser ?
+                <>
+                    <View style={styles.titolorec}>
+
+                        <Text style={styles.textRecensione}>{varNameList}:</Text>
                     </View>
-                    <View style={styles.down_Container_prod_rec}>
-                        <View style={styles.TextRev_Prod}>
-                            <Text>Questo azienda e' sinonimo di qualit..</Text>
-                        </View>
-                        <Button title="Edit" />
-                        <Button title="X" />
+                    <View style={styles.containerRecensioni}> 
+                        <RecensioniFromDb />
                     </View>
-                    <View style={styles.down_Container_prod_rec}>
-                        <View style={styles.TextRev_Prod}>
-                            <Text>Azienda top</Text>
-                        </View>
-                        <Button title="Edit" />
-                        <Button title="X" />
+                </>
+
+                : // condizione di if elese per presentazione della lista tra utente e azienda 
+
+                <>
+                    <View style={styles.titolorec}>
+                        <Text style={styles.textRecensione}>{varNameList}:</Text>
                     </View>
-                </View>
-            </View>
+
+                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
+                        <Button title="aggiungi un prodotto" onPress={() => props.navigation.navigate("Aggiungi prodotto")} />
+                    </View>
+
+                    <View style={styles.containerRecensioni}>
+                        <ProdottiFromDb />
+
+                    </View>
+
+                </>
+            }
+
         </SafeAreaView>
     );
 }
@@ -125,8 +143,7 @@ const styles = StyleSheet.create({
     },
     main_center: {
         width: '100%',
-        height: '28%',
-        marginTop: 20,
+        height: '23%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -135,7 +152,6 @@ const styles = StyleSheet.create({
         height: '25%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
     },
     center_changePassword: {
         width: '95%',
@@ -146,10 +162,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 10,
-     },
+    },
     main_down: {
         width: '100%',
-        height: '72%',
+        height: '70%',
         padding: 20,
     },
     down_Text: {
@@ -183,4 +199,50 @@ const styles = StyleSheet.create({
         marginRight: 15,
         paddingLeft: 16
     },
+    containerRecensioni: {
+        flex: 2.5,
+        width: "100%",
+        height: "100%",
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderColor: '#000',
+    },
+    containerRow: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    containerRec: {
+        flex: 1,
+        width: 350,
+        height: 150,
+        backgroundColor: "#E6E6E6",
+        borderWidth: 3,
+        borderColor: "#000000",
+        borderRadius: 5,
+        marginLeft: 10,
+        marginRight: 10
+    },
+    rectdescrizioneAzienda: {
+        flex: 1.5,
+        backgroundColor: "#E6E6E6",
+        borderWidth: 2,
+    },
+    testoDescrizione: {
+
+        color: "#121212",
+        fontSize: 15,
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+
+    },
+    textRecensione: {
+        alignItems: 'center',
+        fontSize: 20,
+        textAlign: "center",
+    }
 });

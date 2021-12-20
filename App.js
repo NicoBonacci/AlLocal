@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,7 +18,41 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+import { firebase } from "./react-native-firebase/config";
+import { decode, encode } from 'base-64'
+
+if (!global.btoa) { global.btoa = encode }
+if (!global.atob) { global.atob = decode }
+
+
 export default function App({ navigation }) {
+
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+
+    const usersRef = firebase.firestore().collection('users');
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            const userData = document.data()
+            setLoading(false)
+            setUser(userData)
+          })
+          .catch((error) => {
+            setLoading(false)
+          });
+      } else {
+        setLoading(false)
+      }
+    });
+  }, []);
+
+
   return (
     <NavigationContainer>
           <Tab.Navigator
@@ -38,8 +72,26 @@ export default function App({ navigation }) {
               tabBarInactiveTintColor: 'gray'
           })}
           >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Account" component={Account} />
+        {user ? (
+          <Tab.Screen name="Home" >
+            {props => <Home {...props} extraData={user} />}
+          </Tab.Screen>
+        ) : (
+          <>
+            <Tab.Screen name="Home" component={Home} />
+          </>
+        )}
+
+        {user ? (
+          <Tab.Screen name="Account" >
+            {props => <Account {...props} extraData={user} />}
+           
+          </Tab.Screen>
+        ) : (
+          <>
+            <Tab.Screen name="Account" component={Account} />
+          </>
+        )}
       </Tab.Navigator>
     </NavigationContainer>
   );

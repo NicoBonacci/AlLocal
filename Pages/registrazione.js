@@ -33,7 +33,7 @@ export default function registration({ navigation }) {
         }
 
         if (isCompany == 'Yes') {
-          
+
             fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=e5e4640f03c147c58545023a81e1b8e1", requestOptions)
                 .then(response => response.json())
                 .then(result => {
@@ -170,67 +170,67 @@ export default function registration({ navigation }) {
 
 
 const styles = StyleSheet.create({
-container: {
-    flex: 1,
+    container: {
+        flex: 1,
         alignItems: 'center',
     },
-title: {
+    title: {
 
-},
-logo: {
-    flex: 1,
-    height: 120,
-    width: 130,
-    alignSelf: "center",
-    margin: 30
-},
-input: {
-    height: 48,
-    borderRadius: 5,
-    overflow: 'hidden',
-    backgroundColor: 'white',
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 16
-},
-button: {
-    backgroundColor: '#788eec',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
-    height: 48,
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: 'center'
-},
-buttonTitle: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: "bold"
-},
-radioButton: {
-    paddingLeft: '5%',
-    paddingTop: '5%',
-    paddingRight: '5%'
-},
-radioButtonInside: {
-    paddingLeft: '25%',
-     paddingRight: '25%',
     },
-footerView: {
-    flex: 1,
-    alignItems: "center",
-     marginTop: 20
-},
-footerText: {
-    fontSize: 16,
-    color: '#2e2e2d'
-},
-footerLink: {
-    color: "#788eec",
-    fontWeight: "bold",
-    fontSize: 16
-}
+    logo: {
+        flex: 1,
+        height: 120,
+        width: 130,
+        alignSelf: "center",
+        margin: 30
+    },
+    input: {
+        height: 48,
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingLeft: 16
+    },
+    button: {
+        backgroundColor: '#788eec',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        height: 48,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    radioButton: {
+        paddingLeft: '5%',
+        paddingTop: '5%',
+        paddingRight: '5%'
+    },
+    radioButtonInside: {
+        paddingLeft: '25%',
+        paddingRight: '25%',
+    },
+    footerView: {
+        flex: 1,
+        alignItems: "center",
+        marginTop: 20
+    },
+    footerText: {
+        fontSize: 16,
+        color: '#2e2e2d'
+    },
+    footerLink: {
+        color: "#788eec",
+        fontWeight: "bold",
+        fontSize: 16
+    }
 });

@@ -3,11 +3,18 @@ import React from 'react';
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-navigation';
-import Azienda from './Azienda';
+
+
+import { firebase } from '../react-native-firebase/config';
+
 
 
 
 export default function App({ navigation }) {
+
+    const currentUser = firebase.auth().currentUser;
+
+
     return (
         <View style={styles.container}>
 
@@ -60,7 +67,7 @@ export default function App({ navigation }) {
                             <View style={styles.containerRec}>
                                 <Text style={styles.textRecensione}>
                                     Maria Neri {"\n"}{"\n"}Le ricomprerò{"\n"}{"\n"}Valutazione: {"\n"}5/5
-                                 </Text>
+                                </Text>
 
                             </View>
 
@@ -71,16 +78,30 @@ export default function App({ navigation }) {
             </View>
 
             <View style={styles.containerButton}>
-                <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor:'lime' }}>
-                    <Button title="Do a review" onPress={() => navigation.navigate('Review')}
-                    color="#841584"/>
-                </View>
+                {currentUser ?
+                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
+                        <Button title="fai recensione" onPress={() => navigation.navigate('Recensione')}
+                            color="#841584" />
+                    </View>
+                    :
 
-                <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                    <Button title="Reserve" onPress={() => navigation.navigate('Reserve')}/>
-                </View>
+                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
+                        <Button title="fai recensione" onPress={() => navigation.navigate('login')}
+                            color="#841584" />
+                    </View>
+                }
 
-                
+                {currentUser ?
+                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
+                        <Button title="prenota" onPress={() => navigation.navigate('Prenota')} />
+                    </View>
+                    :
+
+                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
+                        <Button title="prenota" onPress={() => navigation.navigate('login')} />
+                    </View>
+
+                }
             </View>
 
         </View>
