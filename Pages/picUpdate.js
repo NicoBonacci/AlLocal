@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+
+import { firebase } from '../react-native-firebase/config';
 
 
 export default function picUpdate() {
@@ -12,9 +14,12 @@ export default function picUpdate() {
   const cameraRef = useRef(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
+  const [uploading, setUploading] = useState(false);
+  const [transfered, setTransfered] = useState(0);
+
   useEffect(() => {
     (async () => {
-        const { status } = await Camera.requestCameraPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -26,9 +31,28 @@ export default function picUpdate() {
     return <Text>No access to camera</Text>;
   }
 
-    const uploadImage = async () => {
+  const uploadImage = async () => {
+    const uploadUri = image;
+    let fileName = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    const newUri = Platform.OS === 'ios' ? uploadUri.replace('file://', '') : uploadUri;
 
-    };
+    setUploading(true);
+    setTransfered(0);
+    
+    const db = firebase.storage();
+    db.ref(fileName).put(newUri);
+    
+
+    try {
+    db;
+    } catch (e) {
+      console.log(e);
+    }Alert.alert('prodotto inserito !');
+      setUploading(false);
+
+    setImage(null);
+
+  };
 
   const takePicture = async () => {
     if (cameraRef) {
@@ -141,9 +165,9 @@ export default function picUpdate() {
                   style={{ width: 200, height: 200, backgroundColor: 'black' }}
                 />
               )}
-             </View>
-             <View>
-                   <TouchableOpacity
+            </View>
+            <View>
+            <TouchableOpacity
                        style={[styles.buttonUpload]}
                        onPress={async () => {
                            if (image === null) {
@@ -167,10 +191,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   camera: {
-      flex: 1,
-      width: 250,
-      height: 250,
-      marginTop: 15
+    flex: 1,
+    width: 250,
+    height: 250,
+    marginTop: 15
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -188,34 +212,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#788eec',
   },
 
-    buttonInside: {
-     flex:1,
-     alignItems: 'center',
-     justifyContent: 'center',
-     width: 150,
-     height: 40,
-     marginRight: 5,
-     marginLeft: 5,
-     backgroundColor: '#788eec',
-    },
+  buttonInside: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+    height: 40,
+    marginRight: 5,
+    marginLeft: 5,
+    backgroundColor: '#788eec',
+  },
 
-    buttonUpload: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 320,
-        height: 40,
-        marginLeft: '12%',
-        marginTop: 10,
-        backgroundColor: '#788eec',
-            
-    },
+  buttonUpload: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 320,
+    height: 40,
+    marginLeft: '12%',
+    marginTop: 10,
+    backgroundColor: '#788eec',
 
-    textInside: {
-        fontSize: 14,
-        color: 'white',
-        fontWeight: 'bold',
-    },
+  },
+
+  textInside: {
+    fontSize: 14,
+    color: 'white',
+    fontWeight: 'bold',
+  },
 
   text: {
     fontSize: 18,
