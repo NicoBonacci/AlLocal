@@ -18,7 +18,8 @@ if (Platform.OS === 'ios') {
         messagingSenderId: "240425908193",
         appId: "1:240425908193:ios:03e402db60637a7ef904a0",
     };
-    app = firebase.initializeApp(firebaseConfig)
+    app = firebase.initializeApp(firebaseConfig);
+
 
 } else {
 
@@ -31,7 +32,8 @@ if (Platform.OS === 'ios') {
         messagingSenderId: "240425908193",
         appId: "1:240425908193:android:638223df073e0dd0f904a0",
     };
-    app = firebase.initializeApp(firebaseConfig)
+    app = firebase.initializeApp(firebaseConfig);
+
 }
 
 

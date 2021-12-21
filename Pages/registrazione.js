@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../react-native-firebase/config'
 import account from "./account";
 import RadioButtonRN from 'radio-buttons-react-native';
+import PicUpdate from './picUpdate';
 
 export default function registration({ navigation }) {
     const [fullName, setFullName] = useState('')
@@ -13,9 +14,10 @@ export default function registration({ navigation }) {
     const [address, setAdress] = useState('')
     const [addressLatitude, setAdressLatitude] = useState('')
     const [addressLongitude, setAdressLongitude] = useState('')
+    const [companyDescription, setCompanyDescription] = useState('')
 
     const [isCompany, setIsCompany] = useState('No')
-    const [seeAddress, setSeeAddress] = useState(false)
+    const [seeAddInformation, setSeeAddInformation] = useState(false)
 
     var requestOptions = {
         method: 'GET',
@@ -58,6 +60,7 @@ export default function registration({ navigation }) {
                     address,
                     addressLatitude,
                     addressLongitude,
+                    companyDescription
                 };
                 const usersRef = firebase.firestore().collection('users')
                 usersRef
@@ -136,15 +139,15 @@ export default function registration({ navigation }) {
                                 data={valueButton}
                                 selectedBtn={(value) => {
                                     setIsCompany(value.value);
-                                    if (value.value == 'Yes') setSeeAddress(true)
-                                    else setSeeAddress(false)
+                                    if (value.value == 'Yes') setSeeAddInformation(true)
+                                    else setSeeAddInformation(false)
                                 }}
                             />
                         </View>
                     </View>
                 </View>
                 {
-                    seeAddress ? <TextInput
+                    seeAddInformation ? <TextInput
                         style={styles.input}
                         placeholderTextColor="#aaaaaa"
                         placeholder='Address'
@@ -154,6 +157,20 @@ export default function registration({ navigation }) {
                         autoCapitalize="none"
                     /> : null
                 }
+
+                {seeAddInformation ? <TextInput
+                    style={styles.input}
+                    placeholderTextColor="#aaaaaa"
+                    placeholder='Description Company'
+                    onChangeText={(text) => setCompanyDescription(text)}
+                    value={companyDescription}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                /> : null
+
+                }
+
+                <PicUpdate />
 
                 <TouchableOpacity
                     style={styles.button}

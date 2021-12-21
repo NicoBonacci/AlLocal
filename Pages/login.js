@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Button } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { firebase } from '../react-native-firebase/config'
+import { firebase } from '../react-native-firebase/config';
 import * as Facebook from 'expo-facebook';
 
 export default function login({ navigation }) {
