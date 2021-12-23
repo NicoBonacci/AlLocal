@@ -12,8 +12,8 @@ export default function picUpdate() {
   const [image, setImage] = useState(null);
   const [useCamera, setUseCamera] = useState(false);
   const cameraRef = useRef(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
-    const [urlPhoto, setUrlPhoto] = useState('');
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [urlPhoto, setUrlPhoto] = useState('');
 
   const [uploading, setUploading] = useState(false);
   const [transfered, setTransfered] = useState(0);
@@ -190,7 +190,7 @@ export default function picUpdate() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container_: {
     flex: 1,
   },
   camera: {

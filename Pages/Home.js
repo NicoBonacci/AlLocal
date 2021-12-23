@@ -8,11 +8,7 @@ import { firebase } from '../react-native-firebase/config'
 
 
 import logo from '../assets/AllLocal_logo.png';
-import profile from '../assets/iconProfile.png';
-import azienda1 from '../assets/azienda1.png';
-import azienda2 from '../assets/dole.png';
-import azienda3 from '../assets/mielemio.png';
-import azienda4 from '../assets/casaDelleCarta.png';
+
 import locationIcon from '../assets/locationIcon.png';
 
 export default function App({navigation}) {
@@ -89,9 +85,10 @@ export default function App({navigation}) {
                                     id: doc._delegate._document.data.value.mapValue.fields.id.stringValue,
                                     fullName: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
                                     coordination: {
-                                        latitude: doc._delegate._document.data.value.mapValue.fields.addressLatitude.doubleValue,
-                                        longitude: doc._delegate._document.data.value.mapValue.fields.addressLongitude.doubleValue
-                                    }
+                                        latitude: doc._delegate._document.data.value.mapValue.fields.addreLat.doubleValue,
+                                        longitude: doc._delegate._document.data.value.mapValue.fields.addreLong.doubleValue
+                                    },
+                                    urlPhoto: doc._delegate._document.data.value.mapValue.fields.responseImage.stringValue,
                                 });
 
                             }
@@ -170,13 +167,14 @@ export default function App({navigation}) {
                     }
 
                     
-                    { Allmarkets ? Allmarkets.map((market) => (
+                    {Allmarkets ? Allmarkets.map((market) => (
+
                         <Marker coordinate={market.coordination}
                             title={market.fullName}
                             onPress={() => {
                                 setShowDetails(true)
                                 setCompanyName(market.fullName)
-                                setUrlImage(azienda1)
+                                setUrlImage(market.urlPhoto)
                             }
                             }
                         />
@@ -184,61 +182,6 @@ export default function App({navigation}) {
                      )) : null
                     }
 
-                    {//market inseriti manualmente di prova da mettere un ciclo for quando ho i dati nel db
-                    }
-
-                    <Marker coordinate={{
-                        latitude: 45.49352339375695,
-                        longitude: 9.218693011821031,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421
-                    }} title='Fattoria Franco'
-                        onPress={() => {
-                            setShowDetails(true)
-                            setCompanyName('Fattoria Franco')
-                            setUrlImage(azienda1)
-                        }
-                        }
-                    />
-                    <Marker coordinate={{
-                        latitude: 45.4616850392618,
-                        longitude: 9.171373124395622,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421
-                    }} title='Dole' onPress={() => {
-                        setShowDetails(true)
-                        setCompanyName('Dole')
-                        setUrlImage(azienda2)
-
-                    }
-                    }
-                    />
-                    <Marker coordinate={{
-                        latitude: 45.474205342036015,
-                        longitude: 9.147855515051386,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421
-                    }} title='Casa della carta'
-                        onPress={() => {
-                            setShowDetails(true)
-                            setCompanyName('Casa della carta')
-                            setUrlImage(azienda4)
-                        }
-                        }
-                    />
-                    <Marker coordinate={{
-                        latitude: 45.46024020998643,
-                        longitude: 9.211026903654878,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421
-                    }} title='Miele mio'
-                        onPress={() => {
-                            setShowDetails(true)
-                            setCompanyName('Miele mio')
-                            setUrlImage(azienda3)
-                        }
-                        }
-                    />
                 </MapView>
 
             </View>
@@ -246,7 +189,7 @@ export default function App({navigation}) {
 
                 {showDetails ? <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda')}>
                     <Text style={styles.textCompany}>{companyName}</Text>
-                    <Image style={styles.picCompanyDimension} source={urlOfImage}/>
+                    <Image style={styles.picCompanyDimension} source={{uri: urlOfImage }}/>
                 </TouchableOpacity> : null}
             </View>
         </View>
