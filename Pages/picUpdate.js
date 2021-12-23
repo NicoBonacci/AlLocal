@@ -12,7 +12,8 @@ export default function picUpdate() {
   const [image, setImage] = useState(null);
   const [useCamera, setUseCamera] = useState(false);
   const cameraRef = useRef(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+    const [type, setType] = useState(Camera.Constants.Type.back);
+    const [urlPhoto, setUrlPhoto] = useState('');
 
   const [uploading, setUploading] = useState(false);
   const [transfered, setTransfered] = useState(0);
@@ -39,18 +40,20 @@ export default function picUpdate() {
     setUploading(true);
     setTransfered(0);
     
-    const db = firebase.storage();
-    db.ref(fileName).put(newUri);
-    
 
-    try {
-    db;
-    } catch (e) {
-      console.log(e);
-    }Alert.alert('prodotto inserito !');
+      const response = await fetch(newUri);
+      const blob = await response.blob();
+
+      var ref = firebase.storage().ref().child("images/" + fileName);
+
+      const snapshot = await ref.put(blob);
+
       setUploading(false);
 
-    setImage(null);
+      const imgUrl = await snapshot.ref.getDownloadURL();
+      setUrlPhoto(imgUrl);
+
+      setImage(null);
 
   };
 
