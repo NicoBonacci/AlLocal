@@ -32,6 +32,9 @@ export default function App({navigation}) {
     const [showDetails, setShowDetails] = useState(false);
     const [companyName, setCompanyName] = useState('');
     const [urlOfImage, setUrlImage] = useState('');
+    const [idAzienda, setIdAzienda] = useState('');
+    const [descAzienda, setDescAzienda] = useState('');
+
 
     const [Allmarkets, setAllMarkets] = useState([]);
     //Scarica i dati dal db una volta sola
@@ -89,6 +92,7 @@ export default function App({navigation}) {
                                         longitude: doc._delegate._document.data.value.mapValue.fields.addreLong.doubleValue
                                     },
                                     urlPhoto: doc._delegate._document.data.value.mapValue.fields.responseImage.stringValue,
+                                    desc: doc._delegate._document.data.value.mapValue.fields.companyDescription.stringValue,
                                 });
 
                             }
@@ -175,6 +179,8 @@ export default function App({navigation}) {
                                 setShowDetails(true)
                                 setCompanyName(market.fullName)
                                 setUrlImage(market.urlPhoto)
+                                setIdAzienda(market.id)
+                                setDescAzienda(market.desc)
                             }
                             }
                         />
@@ -187,7 +193,7 @@ export default function App({navigation}) {
             </View>
             <View style={styles.down}>
 
-                {showDetails ? <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda')}>
+                {showDetails ? <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName  })}>
                     <Text style={styles.textCompany}>{companyName}</Text>
                     <Image style={styles.picCompanyDimension} source={{uri: urlOfImage }}/>
                 </TouchableOpacity> : null}

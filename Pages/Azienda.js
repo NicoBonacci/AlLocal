@@ -4,21 +4,18 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function App({ navigation }) {
+export default function App({ navigation, route }) {
     return (
 
         <View style={styles.container}>
             <View style={styles.rectNomeAzienda}>
-                <Text style={styles.nomeAzienda}>Miele Mio</Text>
+                <Text style={styles.nomeAzienda}>{route.params.name}</Text>
             </View>
 
             <View style={styles.rectdescrizioneAzienda}>
                 <ScrollView>
                     <Text style={styles.testoDescrizione}>
-                        L’Azienda Miele mio nasce nel 2010 da una brillante intuizione di Gianfranco che, apprezzando le potenzialità della zona e la propensione della propria famiglia nello sviluppare un’attività per la valorizzazione del territorio, propone di dar vita a un progetto agricolo.
-                        {"\n"}{"\n"}
-                        Grazie alle grandi passioni per l’apicoltura del figlio Andrea e per la coltivazione delle erbe officinali della moglie Maria Luisa, nasce l’Azienda Agricola Miele Mio dedicata alla produzione miele.
-                        {"\n"}{"\n"}L’Azienda è nata dall’unione di due elementi: l’amore per la natura e la passione per l’apicoltura; infatti, Andrea, nonostante un’avviata carriera di architetto, decide di ritornare alla terra e di investire tutto nell’azienda agricola, rincorrendo così il suo sogno di vivere e lavorare a contatto con la natura e col mondo meraviglioso delle api.
+                        {route.params.desc}
                     </Text>
                 </ScrollView>
             </View>
