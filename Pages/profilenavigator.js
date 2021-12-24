@@ -16,6 +16,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import login from "./login";
 import registrazione from "./registrazione";
+import AggiungiProdotto from "./aggiungiProdotto.js";
 import Account from "./account";
 import { decode, encode } from 'base-64'
 import { firebase } from '../react-native-firebase/config'
@@ -35,9 +36,11 @@ const Stack = createStackNavigator();
   return (
     <TouchableOpacity onPress={navigateToCart}>
       <Feather name={'Account'}/>
-    </TouchableOpacity>
+    </Touchable,..-òOpacity>
   );
 }*/
+
+
 
 export default function App({ navigation }) {
 

@@ -11,7 +11,7 @@ import logo from '../assets/AllLocal_logo.png';
 
 import locationIcon from '../assets/locationIcon.png';
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
     //var usata per salvare la posizione ottenuta dal gps del cell
     const [location, setLocation] = useState(null);
 
@@ -170,7 +170,7 @@ export default function App({navigation}) {
                             style={{ height: 20, width: 20 }} /></Marker> : null
                     }
 
-                    
+
                     {Allmarkets ? Allmarkets.map((market) => (
 
                         <Marker coordinate={market.coordination}
@@ -185,19 +185,21 @@ export default function App({navigation}) {
                             }
                         />
 
-                     )) : null
+                    )) : null
                     }
+                    {showDetails ?
+                        <View style={styles.down}>
+                        <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName })}>
+                            <Text style={styles.textCompany}>{companyName}</Text>
+                            <Image style={styles.picCompanyDimension} source={{ uri: urlOfImage }} />
+                        </TouchableOpacity>
+                        </View>
+                        : null}
 
                 </MapView>
 
             </View>
-            <View style={styles.down}>
 
-                {showDetails ? <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName  })}>
-                    <Text style={styles.textCompany}>{companyName}</Text>
-                    <Image style={styles.picCompanyDimension} source={{uri: urlOfImage }}/>
-                </TouchableOpacity> : null}
-            </View>
         </View>
     );
 
@@ -228,10 +230,11 @@ const styles = StyleSheet.create({
         height: '50%',
         marginHorizontal: 0,
         flexGrow: 1,
+
     },
     down: {
         width: '100%',
-        height: '30%',
+        height: '29%',
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
@@ -250,13 +253,11 @@ const styles = StyleSheet.create({
 
     },
     down_company: {
-
-        width: '90%',
-        height: '80%',
+        width: '92%',
+        height: '90%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#EAEAEA'
-
+        backgroundColor: '#EAEAEA',
     },
     up_logo_enter: {
 
@@ -294,3 +295,4 @@ const styles = StyleSheet.create({
         height: '50%',
     }
 });
+

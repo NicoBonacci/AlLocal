@@ -10,7 +10,7 @@ import { firebase } from '../react-native-firebase/config';
 
 
 
-export default function App({ navigation }) {
+export default function App({ navigation, route }) {
 
     const currentUser = firebase.auth().currentUser;
 
@@ -19,26 +19,18 @@ export default function App({ navigation }) {
         <View style={styles.container}>
 
             <View style={styles.containerName}>
-                <Text style={styles.nameText}>Caramelle al miele</Text>
+                <Text style={styles.nameText}>{route.params.nome}</Text>
             </View>
 
             <View style={styles.containerBio}>
                 <View style={styles.imageRow} >
-                    <Image source={require('../assets/caramelle.png')}
+                    <Image source={{ uri: route.params.photo }}
                         style={styles.image}>
 
                     </Image>
                     <ScrollView>
                         <Text style={styles.prodottoText}>
-                            Le nostre caramelle al miele contengono i seguenti ingredienti
-                            {"\n"}{"\n"}
-                            Ingredienti: zucchero, sciroppo di glucosio, miele 10%
-                            {"\n"}{"\n"}
-                            Possibili tracce di sesamo.
-                            {"\n"}{"\n"}
-                            Senza glutine
-                            {"\n"}{"\n"}
-                            voto: 4,00
+                            { route.params.desc}
                         </Text>
                     </ScrollView>
                 </View>
