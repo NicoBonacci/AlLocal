@@ -105,7 +105,7 @@ function ProdottiFromDb() {
                                     <View>
 
                                         <View style={styles.imageRow} >
-                                            <Image source={require('../photo/foto.jpg')}
+                                            <Image source={{uri:prodotto.Foto}}
                                                 style={styles.image}>
                                             </Image>
                                             <ScrollView>
