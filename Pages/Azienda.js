@@ -10,6 +10,7 @@ export default function App({ navigation, route }) {
 
     const [allProducts, setAllProducts] = useState([]);
     const [downloadProduct, setDownloadProduct] = useState(false);
+    var mailAz = route.params.mail;
 
     useEffect(() => {
         if (downloadProduct == false) {
@@ -68,7 +69,7 @@ export default function App({ navigation, route }) {
 
                              <TouchableOpacity
                                     style={styles.rectContenutoProdotto}
-                                    onPress={() => navigation.navigate('Product', { descProd: product.descrizione, photo: product.urlPhotoProd, nome: product.nome, id: product.idProd, prezzo: product.prezzo })}>
+                                    onPress={() => navigation.navigate('Product', { descProd: product.descrizione, photo: product.urlPhotoProd, nome: product.nome, id: product.idProd, prezzo: product.prezzo, emailAz: mailAz })}>
 
                                     <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5, fontSize: 30}}>
                                        {product.nome}

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState, useEffect} from 'react';
+import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, SafeAreaView, Linking  } from 'react-native';
 import Azienda from './Azienda';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -11,10 +11,14 @@ export default function Prenota ({ navigation, route })  {
 
     const [quantita, setquantita] = useState('')
     const [commenti, setCommenti] = useState('')
-
+    var mailAz = route.params.mailAz;
 
     const sendEmail = () => {
+        console.log(route.params.mailAz)
+        const link = 'mailto:' + mailAz + '?subject=Prenotazione AlLocal&body=Ordine un quantitativo di: ' + quantita + ' per il prodotto ' + route.params.nomeProd + "\n\n" + commenti;
 
+        Linking.openURL(link);
+       
     }
 
     return (
@@ -49,7 +53,7 @@ export default function Prenota ({ navigation, route })  {
                             placeholderTextColor="#aaaaaa"
                             keyboardType='numeric'
                             placeholder='Insert quantity'
-                            onChangeText={(text) => setQuantita(text)}
+                            onChangeText={(text) => setquantita(text)}
                             value={quantita}
                             underlineColorAndroid="transparent"
                             autoCapitalize="none"

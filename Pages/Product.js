@@ -104,7 +104,7 @@ export default function App({ navigation, route }) {
 
                 {currentUser ?
                     <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                        <Button title="prenota" onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo })} />
+                        <Button title="prenota" onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })} />
                     </View>
                     :
 

@@ -34,7 +34,7 @@ export default function App({ navigation }) {
     const [urlOfImage, setUrlImage] = useState('');
     const [idAzienda, setIdAzienda] = useState('');
     const [descAzienda, setDescAzienda] = useState('');
-
+    const [mail, setMail] = useState('');
 
     const [Allmarkets, setAllMarkets] = useState([]);
     //Scarica i dati dal db una volta sola
@@ -93,6 +93,7 @@ export default function App({ navigation }) {
                                     },
                                     urlPhoto: doc._delegate._document.data.value.mapValue.fields.responseImage.stringValue,
                                     desc: doc._delegate._document.data.value.mapValue.fields.companyDescription.stringValue,
+                                    mail: doc._delegate._document.data.value.mapValue.fields.email.stringValue
                                 });
 
                             }
@@ -181,6 +182,7 @@ export default function App({ navigation }) {
                                 setUrlImage(market.urlPhoto)
                                 setIdAzienda(market.id)
                                 setDescAzienda(market.desc)
+                                setMail(market.mail)
                             }
                             }
                         />
@@ -189,7 +191,7 @@ export default function App({ navigation }) {
                     }
                     {showDetails ?
                         <View style={styles.down}>
-                        <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName })}>
+                        <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName, mail: mail })}>
                             <Text style={styles.textCompany}>{companyName}</Text>
                             <Image style={styles.picCompanyDimension} source={{ uri: urlOfImage }} />
                         </TouchableOpacity>
