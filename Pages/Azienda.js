@@ -68,7 +68,7 @@ export default function App({ navigation, route }) {
 
                              <TouchableOpacity
                                     style={styles.rectContenutoProdotto}
-                                    onPress={() => navigation.navigate('Product', { desc: product.descrizione, photo: product.urlPhotoProd, nome: product.nome, id: product.idProd, prezzo: product.prezzo })}>
+                                    onPress={() => navigation.navigate('Product', { descProd: product.descrizione, photo: product.urlPhotoProd, nome: product.nome, id: product.idProd, prezzo: product.prezzo })}>
 
                                     <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5, fontSize: 30}}>
                                        {product.nome}
