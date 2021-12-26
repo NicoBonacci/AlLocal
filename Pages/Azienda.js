@@ -12,9 +12,7 @@ export default function App({ navigation, route }) {
     const [downloadProduct, setDownloadProduct] = useState(false);
 
     useEffect(() => {
-        console.log('start');
         if (downloadProduct == false) {
-            console.log('start');
             firebase.firestore().collection('prodotti')
                 .where('AziendaId', '==', route.params.id)
                 .get()

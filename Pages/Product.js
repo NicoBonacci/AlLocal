@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {  useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-navigation';
@@ -13,7 +13,35 @@ import { firebase } from '../react-native-firebase/config';
 export default function App({ navigation, route }) {
 
     const currentUser = firebase.auth().currentUser;
+    const prodId = route.params.id;
 
+
+    const [allReview, setAllReview] = useState([]);
+    const [downloadReview, setDownloadReview] = useState(false);
+
+    useEffect(() => {
+        if (downloadReview == false) {
+            firebase.firestore().collection('recensioni')
+                .where('prodottoId', '==', prodId)
+                .get()
+                .then(snapshot => {
+                    const review = [];
+
+                    snapshot
+                        .docs
+                        .forEach(doc => {
+                            review.push({
+                                nome: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
+                                descrizione: doc._delegate._document.data.value.mapValue.fields.Post.stringValue,
+                                voto: doc._delegate._document.data.value.mapValue.fields.voto.integerValue,
+                            });
+                        });
+                    setAllReview(review);
+                });
+
+            setDownloadReview(true);
+        }
+    });
 
     return (
         <View style={styles.container}>
@@ -42,27 +70,18 @@ export default function App({ navigation, route }) {
                 <View style={styles.containerRow}>
                     <SafeAreaView>
                         <ScrollView horizontal>
-                            <View style={styles.containerRec}>
-                                <Text style={styles.textRecensione}>
-                                    Mario Rossi {"\n"}{"\n"}Queste caramelle mi sono piaciute molto!{"\n"}{"\n"}Valutazione: {"\n"}4/5
-                                </Text>
 
-                            </View>
+                            {allReview ? allReview.map((review) => (
 
-                            <View style={styles.containerRec}>
-                                <Text style={styles.textRecensione}>
-                                    Luigi Bianchi {"\n"}{"\n"}Buone, ma ne ho mangiate delle più buone{"\n"}{"\n"}Valutazione: {"\n"}3/5
-                                </Text>
+                                <View style={styles.containerRec}>
+                                    <Text style={styles.textRecensione}>
+                                        {review.fullName} {"\n"}{"\n"}{review.descrizione}{"\n"}{"\n"}Valutazione: {"\n"}{review.voto}
+                                    </Text>
 
-                            </View>
+                                </View>
 
-                            <View style={styles.containerRec}>
-                                <Text style={styles.textRecensione}>
-                                    Maria Neri {"\n"}{"\n"}Le ricomprerò{"\n"}{"\n"}Valutazione: {"\n"}5/5
-                                </Text>
-
-                            </View>
-
+                            )) : null
+                            }
 
                         </ScrollView>
                     </SafeAreaView>
@@ -72,7 +91,7 @@ export default function App({ navigation, route }) {
             <View style={styles.containerButton}>
                 {currentUser ?
                     <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-                        <Button title="fai recensione" onPress={() => navigation.navigate('Recensione')}
+                        <Button title="fai recensione" onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}
                             color="#841584" />
                     </View>
                     :

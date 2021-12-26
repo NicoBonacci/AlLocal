@@ -9,34 +9,54 @@ import { getDatabase, ref, onValue, set } from 'firebase/database';
 import { firebase } from '../react-native-firebase/config';
 import { doc, waitForPendingWrites } from 'firebase/firestore';
 
-export default function App({ navigation }) {
+export default function App({ navigation, route }) {
 
   const [post, setPost] = useState('');
   const currentUser = firebase.auth().currentUser;
 
   const [update, setUpdate] = useState(false);
 
+    const prodId = route.params.prodottoId;
 
+   
   const storingRecensione = () => {
-    try {
-      const pid = firebase.firestore().collection("recensioni").doc().id;
-      const db = firebase.firestore();
-      db.collection("recensioni")
-        .doc(pid)
-        .set({
-          Postid: pid,
-          UserId: currentUser.uid,
-          Post: post,
-          prodottoId: null,
-          voto: null,
-        })
-        .then(() => {
-          Alert.alert('post inserito!');
-        })
-      setPost('');
-    } catch (err) {
-      Alert.alert("there is something waitForPendingWrites", err.messsage);
-    }
+
+
+      firebase.firestore().collection('users')
+          .where('id', '==', currentUser.uid)
+          .get().then((userDownloaded) => {
+
+              userDownloaded
+                  .docs
+                  .forEach(doc => {
+                      try {
+                          const pid = firebase.firestore().collection("recensioni").doc().id;
+                          const db = firebase.firestore();
+                          db.collection("recensioni")
+                              .doc(pid)
+                              .set({
+                                  Postid: pid,
+                                  UserId: currentUser.uid,
+                                  Post: post,
+                                  prodottoId: prodId,
+                                  fullName: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
+                                  voto: 0,
+                              })
+                              .then(() => {
+                                  Alert.alert('post inserito!');
+                              })
+                          setPost('');
+                      } catch (err) {
+                          Alert.alert("there is something waitForPendingWrites", err.messsage);
+                      }
+
+
+
+                      });
+
+              });
+
+ 
   }
 
 

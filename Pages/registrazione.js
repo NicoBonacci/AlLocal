@@ -126,57 +126,94 @@ export default function registration({ navigation }) {
         if (image === null && isCompany == 'Yes') {
             alert("Upload a picture");
         } else {
-            uploadImage().then((responseImage) => {
-                console.log(responseImage);
-                fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=e5e4640f03c147c58545023a81e1b8e1", requestOptions)
-                    .then(response => response.json())
-                    .then(result => {
-                        console.log(urlPhoto);
-                        return result;
-                    })
-                    .catch(error => console.log('error', error))
-                    .then((responseGeometry) => {
-                        var addreLat = responseGeometry.features[0].geometry.coordinates[1];
-                        var addreLong = responseGeometry.features[0].geometry.coordinates[0];
-                            
-                        firebase
-                            .auth()
-                            .createUserWithEmailAndPassword(email, password)
-                            .then((response) => {
-                                const uid = response.user.uid
-                                const data = {
-                                    id: uid,
-                                    email,
-                                    fullName,
-                                    isCompany,
-                                    address,
-                                    addreLat,
-                                    addreLong,
-                                    companyDescription,
-                                    responseImage
-                                };
-                                const usersRef = firebase.firestore().collection('users')
-                                usersRef
-                                    .doc(uid)
-                                    .set(data)
-                                    .then(() => {
-                                        navigation.navigate('Account', { user: data })
-                                    })
-                                    .catch((error) => {
-                                        alert(error)
-                                    });
-                            })
-                            .catch((error) => {
-                                alert(error)
-                            });
-                    
+            if (isCompany == 'Yes') {
+                uploadImage().then((responseImage) => {
+                    console.log(responseImage);
+                    fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=e5e4640f03c147c58545023a81e1b8e1", requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log(urlPhoto);
+                            return result;
+                        })
+                        .catch(error => console.log('error', error))
+                        .then((responseGeometry) => {
+                            var addreLat = responseGeometry.features[0].geometry.coordinates[1];
+                            var addreLong = responseGeometry.features[0].geometry.coordinates[0];
 
-                    }).catch((error) => {
-                        alert(error)
-                    });
-            }).catch((error) => {
-                alert(error)
-            });
+                            firebase
+                                .auth()
+                                .createUserWithEmailAndPassword(email, password)
+                                .then((response) => {
+                                    const uid = response.user.uid
+                                    const data = {
+                                        id: uid,
+                                        email,
+                                        fullName,
+                                        isCompany,
+                                        address,
+                                        addreLat,
+                                        addreLong,
+                                        companyDescription,
+                                        responseImage
+                                    };
+                                    const usersRef = firebase.firestore().collection('users')
+                                    usersRef
+                                        .doc(uid)
+                                        .set(data)
+                                        .then(() => {
+                                            navigation.navigate('Account', { user: data })
+                                        })
+                                        .catch((error) => {
+                                            alert(error)
+                                        });
+                                })
+                                .catch((error) => {
+                                    alert(error)
+                                });
+
+
+                        }).catch((error) => {
+                            alert(error)
+                        });
+                }).catch((error) => {
+                    alert(error)
+                });
+            } else {
+
+                var addreLat = '';
+                var addreLong = '';
+                var responseImage = '';
+                            firebase
+                                .auth()
+                                .createUserWithEmailAndPassword(email, password)
+                                .then((response) => {
+                                    const uid = response.user.uid
+                                    const data = {
+                                        id: uid,
+                                        email,
+                                        fullName,
+                                        isCompany,
+                                        address,
+                                        addreLat,
+                                        addreLong,
+                                        companyDescription,
+                                        responseImage
+                                    };
+                                    const usersRef = firebase.firestore().collection('users')
+                                    usersRef
+                                        .doc(uid)
+                                        .set(data)
+                                        .then(() => {
+                                            navigation.navigate('Account', { user: data })
+                                        })
+                                        .catch((error) => {
+                                            alert(error)
+                                        });
+                                })
+                                .catch((error) => {
+                                    alert(error)
+                                });
+            }
         }
 
 
