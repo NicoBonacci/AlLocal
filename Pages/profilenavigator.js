@@ -18,6 +18,10 @@ import login from "./login";
 import registrazione from "./registrazione";
 import AggiungiProdotto from "./aggiungiProdotto.js";
 import Account from "./account";
+import EditProdotto from "./editProdotto";
+import EditBioAzienda from "./editBioAzienda";
+
+
 import { decode, encode } from 'base-64'
 import { firebase } from '../react-native-firebase/config'
 
@@ -36,7 +40,7 @@ const Stack = createStackNavigator();
   return (
     <TouchableOpacity onPress={navigateToCart}>
       <Feather name={'Account'}/>
-    </Touchable,..-òOpacity>
+    </Touchable,..-ï¿½Opacity>
   );
 }*/
 
@@ -79,6 +83,9 @@ export default function App({ navigation }) {
           <Stack.Screen name="Aggiungi prodotto">
             {props => <AggiungiProdotto {...props} extraData={user} />}
           </Stack.Screen>
+          <Stack.Screen name="Modifica biografia" component={EditBioAzienda} />
+          <Stack.Screen name="Edit Prodotto" component={EditProdotto}/>
+
         </>
       ) : (
         <>

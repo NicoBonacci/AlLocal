@@ -15,13 +15,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 
 
-export default function App({ navigation }) {
+export default function App({ route }) {
 
-    const [descrizione, setDescrizione] = useState('');
-    const [immagine, setImmagine] = useState('');
-    const [nomeProdotto, setNomeProdotto] = useState('');
-    const [prezzo, setPrezzo] = useState('');
-    const [voti, setVoti] = useState('');
+    const [newDescrizione, setNewDescrizione] = useState('');
+    //const [immagine, setImmagine] = useState('');
+    const [newNomeProdotto, setNewNomeProdotto] = useState('');
+    const [newPrezzo, setNewPrezzo] = useState('');
+    const [newVoti, setNewVoti] = useState('');
+
 
     const [hasPermission, setHasPermission] = useState(null);
     const [image, setImage] = useState(null);
@@ -33,35 +34,42 @@ export default function App({ navigation }) {
     const [uploading, setUploading] = useState(false);
     const [transfered, setTransfered] = useState(0);
 
-    
+
 
     const currentUser = firebase.auth().currentUser;
 
     const uploadImage = async () => {
-        const uploadUri = image;
-        let fileName = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-        const newUri = Platform.OS === 'ios' ? uploadUri.replace('file://', '') : uploadUri;
 
-        setUploading(true);
-        setTransfered(0);
+        if (image != null) {
+            // funzione per cancellare l'immagine che ce nel db.
+            //const storageRef = firebase.storage().refFromURL(route.params.Foto);
+            const imageRef = firebase.storage().ref().child("images/" + route.params.Foto);
+            imageRef.delete()
+                .then(() => {
+                    console.log('immagine calncellata');
+                })
+            // qui inizia l'inerimento della nuova immagine
+            const uploadUri = image;
+            let fileName = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+            const newUri = Platform.OS === 'ios' ? uploadUri.replace('file://', '') : uploadUri;
 
-        const response = await fetch(newUri);
-        const blob = await response.blob();
+            setUploading(true);
+            setTransfered(0);
+            const response = await fetch(newUri);
+            const blob = await response.blob();
+            var ref = firebase.storage().ref().child("images/" + fileName);
+            const snapshot = await ref.put(blob);
+            setUploading(false);
+            const imgUrl = await snapshot.ref.getDownloadURL();
+            setUrlPhoto(imgUrl);
+            return imgUrl;
+        } else {
+            return null;
+        }
 
-        var ref = firebase.storage().ref().child("images/" + fileName);
-
-        const snapshot = await ref.put(blob);
-
-
-        setUploading(false);
-
-
-        const imgUrl = await snapshot.ref.getDownloadURL();
-        setUrlPhoto(imgUrl);
-
-        return imgUrl;
 
     };
+
     const takePicture = async () => {
         if (cameraRef) {
             console.log('in take picture');
@@ -97,71 +105,73 @@ export default function App({ navigation }) {
     const saveProdotto = () => {
         uploadImage().then((responseImage) => {
             console.log(responseImage);
-            try {
-                const pid = firebase.firestore().collection("prodotti").doc().id;
-                const db = firebase.firestore();
-                db.collection("prodotti")
-                    .doc(pid)
-                    .set({
-                        Prodottoid: pid,
-                        AziendaId: currentUser.uid,
-                        Descrizione: descrizione,
-                        Nome: nomeProdotto,
-                        MediaVoto: null,
-                        Prezzo: parseInt(prezzo),
-                        Foto: responseImage,
-                        imageUrl: urlPhoto
-                    })
-                    .then(() => {
-                        Alert.alert('prodotto inserito !');
-                    })
-                setDescrizione('');
-                setNomeProdotto('');
-                setPrezzo('');
-                setImmagine('');
-                setPrezzo('');
-            } catch (err) {
-                Alert.alert("there is something go wrong", err.messsage);
+            if (responseImage != null) {
+                try {
+
+                    const db = firebase.firestore();
+                    db.collection("prodotti")
+                        .doc(route.params.idProdotto)
+                        .update({
+                            Foto: responseImage,
+                        })
+                        .then(() => {
+                            console.log('foto aggiornata');
+                        })
+                } catch (err) {
+                    console.log('qualcosa non ha funzionato');
+                }
             }
+            if (newDescrizione != '') {
+                try {
+                    const db = firebase.firestore();
+                    db.collection("prodotti")
+                        .doc(route.params.idProdotto)
+                        .update({
+                            Descrizione: newDescrizione,
+                        })
+                        .then(() => {
+                            console.log('descrizione aggiornata');
+                        })
+                }
+                catch {
+                    console.log('qualcosa non ha funzionato');
+                }
+            }
+            if (newNomeProdotto != '') {
+                try {
+                    const db = firebase.firestore();
+                    db.collection("prodotti")
+                        .doc(route.params.idProdotto)
+                        .update({
+                            Nome: newNomeProdotto,
+                        })
+                        .then(() => {
+                            console.log('nome prodotto aggiornato');
+                        })
+                }
+                catch {
+                    console.log('qualcosa non ha funzionato');
+                }
+            }
+            if (newPrezzo != '') {
+                try {
+                    const db = firebase.firestore();
+                    db.collection("prodotti")
+                        .doc(route.params.idProdotto)
+                        .update({
+                            Prezzo: newPrezzo,
+                        })
+                        .then(() => {
+                            console.log('prezzo prodotto aggiornato');
+                        })
+                }
+                catch {
+                    console.log('qualcosa non ha funzionato');
+                }
+            }
+
         })
     }
-
-
-    const storingProdotto = () => {
-        try {
-            const pid = firebase.firestore().collection("prodotti").doc().id;
-            const db = firebase.firestore();
-            db.collection("prodotti")
-                .doc(pid)
-                .set({
-                    Prodottoid: pid,
-                    AziendaId: currentUser.uid,
-                    Descrizione: descrizione,
-                    Nome: nomeProdotto,
-                    MediaVoto: null,
-                    Prezzo: parseInt(prezzo),
-                    Foto: urlPhoto,
-                })
-                .then(() => {
-                    Alert.alert('prodotto inserito !');
-                })
-            setDescrizione('');
-            setNomeProdotto('');
-            setPrezzo('');
-            setImmagine('');
-            setPrezzo('');
-        } catch (err) {
-            Alert.alert("there is something go wrong", err.messsage);
-        }
-    }
-    useEffect(() => {
-        setDescrizione('');
-        setNomeProdotto('');
-        setPrezzo('');
-        setImmagine('');
-        setPrezzo('');
-    }, [])
-
 
     return (
         <View style={styles.container}>
@@ -169,9 +179,9 @@ export default function App({ navigation }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder='nome del prodotto'
+                        placeholder="prova"
                         placeholderTextColor="#aaaaaa"
-                        onChangeText={(text) => setNomeProdotto(text)}
+                        onChangeText={(text) => setNewNomeProdotto(text)}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
                     />
@@ -180,11 +190,11 @@ export default function App({ navigation }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder='descrizione'
+                        placeholder="prova"
                         placeholderTextColor="#aaaaaa"
                         multiline
                         numberOfLines={4}
-                        onChangeText={(text) => setDescrizione(text)}
+                        onChangeText={(text) => setNewDescrizione(text)}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
                     />
@@ -193,9 +203,9 @@ export default function App({ navigation }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder='prezzo'
+                        placeholder="prova"
                         placeholderTextColor="#aaaaaa"
-                        onChangeText={(number) => parseInt(setPrezzo(number))}
+                        onChangeText={(number) => parseInt(setNewPrezzo(number))}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
                     />
@@ -292,20 +302,14 @@ export default function App({ navigation }) {
 
                 {/*fine codice per caricamento delle foto*/}
 
-
-
-
                 <View>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => saveProdotto()}>
                         <Text style={styles.buttonTitle}>store the product</Text>
                     </TouchableOpacity>
-
-
                 </View>
             </ScrollView>
-
         </View >
     );
 }

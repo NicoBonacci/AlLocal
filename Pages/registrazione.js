@@ -307,6 +307,8 @@ export default function registration({ navigation }) {
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
                     placeholder='Description Company'
+                    multiline
+                    numberOfLines={4}
                     onChangeText={(text) => setCompanyDescription(text)}
                     value={companyDescription}
                     underlineColorAndroid="transparent"

@@ -6,39 +6,34 @@ import { firebase } from '../react-native-firebase/config';
 import { getAuth, updatePassword } from "firebase/auth";
 import { doc } from 'firebase/firestore';
 
-import EditProdotto from '../Pages/editProdotto';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-
-import AziendaFromDb from './aziendaFromDb';
 
 
 
 export default function ProdottiFromDb() {
+
     const auth = getAuth();
     const User = auth.currentUser;
-    const navigation = useNavigation();
 
-    const [deleted, setDeleted] = useState(false);
-    const [edit, setEdit] = useState(false);
     const [caricato, setCaricato] = useState(false);
 
-    const [prodotti, setProdotti] = useState([])
+    const [aziende, setAziende] = useState([])
     const [newPost, setNewPost] = useState(null);
+    const [edit,setEdit] = useState(false);
 
     const editValue = null;
-    
+
     const fetchProdotti = async () => {
 
         const list = [];
 
-        const response = firebase.firestore().collection('prodotti');
+        const response = firebase.firestore().collection('users');
         const data = await response.get();
         data.docs.forEach(item => {
             list.push(item.data());
-
         })
-        setProdotti(list);
+        setAziende(list);
         setCaricato(true);
     }
 
@@ -53,79 +48,31 @@ export default function ProdottiFromDb() {
 
     useEffect(() => {
         fetchProdotti();
-        setDeleted(false);
-    }, [deleted])
-
-    useEffect(() => {
-        fetchProdotti();
         setEdit(false);
     }, [edit])
 
     const value = null;
-    const deleteProdotto = (value) => {
-        try {
-            const db = firebase.firestore();
-            db.collection('prodotti')
-                .doc(value)
-                .delete()
-                .then(() => {
-                    Alert.alert('post cancellato !');
-                })
-
-            setDeleted(true);
-        }
-        catch (e) {
-            Alert.alert('qualocsa è andato storto', e.message);
-        }
-    }
-
 
     return (
 
         <View style={styles.containerRow}>
             <SafeAreaView>
                 <ScrollView>
-                    {/*<AziendaFromDb />*/}
-
+                    <View style={styles.containerNew} >
                     {
-                        prodotti && prodotti.map(prodotto => {
-                            if (User.uid == prodotto.AziendaId) {
+                        aziende && aziende.map(azienda => {
+                            if (User.uid == azienda.id) {
                                 return (
-                                    <View>
-
+                                    <View style={styles.containerBio}>
                                         <View style={styles.imageRow} >
-                                            <Image source={{ uri: prodotto.Foto }}
+                                            <Image source={{ uri: azienda.responseImage }}
                                                 style={styles.image}>
                                             </Image>
                                             <ScrollView>
                                                 <Text style={styles.prodottoText}>
-                                                    {prodotto.Nome}
+                                                    {azienda.companyDescription}
                                                 </Text>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.Descrizione}
-                                                </Text>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.Prezzo}€
-                                                </Text>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.MediaVoto}
-                                                </Text>
-
                                             </ScrollView>
-                                        </View>
-
-                                        <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                                            <Button title="X"
-                                                onPress={() => deleteProdotto(prodotto.Prodottoid)} />
-                                        </View>
-
-                                        <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-
-                                            <Button title="modifica prodotto"
-                                                color="#841584"
-                                                onPress={() => navigation.navigate("Edit Prodotto",
-                                                { desc: prodotto.Descrizione, idProdotto:prodotto.Prodottoid , name: prodotto.Nome, prezzo: prodotto.Prezzo, immagine:prodotto.Foto})} />
-
                                         </View>
 
 
@@ -136,6 +83,7 @@ export default function ProdottiFromDb() {
 
                         })
                     }
+                    </View>
 
                 </ScrollView>
             </SafeAreaView>
@@ -143,11 +91,6 @@ export default function ProdottiFromDb() {
     );
 
 }
-
-
-
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -205,4 +148,14 @@ const styles = StyleSheet.create({
         width: 90,
         height: 97
     },
+    containerBio: {
+        flex: 2.5,
+        backgroundColor: '#E6E6E6',
+        borderBottomWidth: 1,
+        borderColor: '#000',
+    },
+    containerNew: {
+        marginBottom: 15,
+        marginTop: 5
+    }
 })

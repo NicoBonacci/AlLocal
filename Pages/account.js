@@ -15,6 +15,8 @@ import { QuerySnapshot } from 'firebase/firestore';
 
 import RecensioniFromDb from '../fromDatabase/recensioniFromDb';
 import ProdottiFromDb from '../fromDatabase/prodottiFromDb';
+import AziendaFromDb from '../fromDatabase/aziendaFromDb';
+
 import recensioniFromDb, * as recensioni from '../fromDatabase/recensioniFromDb';
 
 export default function Account(props) {
@@ -87,7 +89,7 @@ export default function Account(props) {
 
                         <Text style={styles.textRecensione}>{varNameList}:</Text>
                     </View>
-                    <View style={styles.containerRecensioni}> 
+                    <View style={styles.containerRecensioni}>
                         <RecensioniFromDb />
                     </View>
                 </>
@@ -97,15 +99,24 @@ export default function Account(props) {
                 <>
                     <View style={styles.titolorec}>
                         <Text style={styles.textRecensione}>{varNameList}:</Text>
+
                     </View>
+                    <AziendaFromDb />
+
 
                     <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
                         <Button title="aggiungi un prodotto" onPress={() => props.navigation.navigate("Aggiungi prodotto")} />
+                        
                     </View>
+                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
+                        <Button title="modifica biografia azienda"
+                        onPress={() => props.navigation.navigate("Modifica biografia")} 
+                        />
+                    </View>
+
 
                     <View style={styles.containerRecensioni}>
                         <ProdottiFromDb />
-
                     </View>
 
                 </>
