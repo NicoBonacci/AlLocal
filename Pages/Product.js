@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {  useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-navigation';
@@ -19,29 +19,37 @@ export default function App({ navigation, route }) {
     const [allReview, setAllReview] = useState([]);
     const [downloadReview, setDownloadReview] = useState(false);
 
-    useEffect(() => {
-        if (downloadReview == false) {
-            firebase.firestore().collection('recensioni')
-                .where('prodottoId', '==', prodId)
-                .get()
-                .then(snapshot => {
-                    const review = [];
+    const fetchProdotti = async () => {
+        firebase.firestore().collection('recensioni')
+            .where('prodottoId', '==', prodId)
+            .get()
+            .then(snapshot => {
+                const review = [];
 
-                    snapshot
-                        .docs
-                        .forEach(doc => {
-                            review.push({
-                                nome: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
-                                descrizione: doc._delegate._document.data.value.mapValue.fields.Post.stringValue,
-                                voto: doc._delegate._document.data.value.mapValue.fields.voto.integerValue,
-                            });
+                snapshot
+                    .docs
+                    .forEach(doc => {
+                        review.push({
+                            nome: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
+                            descrizione: doc._delegate._document.data.value.mapValue.fields.Post.stringValue,
+                            voto: doc._delegate._document.data.value.mapValue.fields.voto.integerValue,
                         });
-                    setAllReview(review);
-                });
+                    });
+                setAllReview(review);
+                setDownloadReview(true);
+            });
+            
 
-            setDownloadReview(true);
-        }
-    });
+    }
+
+    useEffect(() => {
+        fetchProdotti();
+    }, [])
+
+    useEffect(() => {
+        fetchProdotti();
+        setDownloadReview(false);
+    }, [downloadReview])
 
     return (
         <View style={styles.container}>
@@ -75,7 +83,7 @@ export default function App({ navigation, route }) {
 
                                 <View style={styles.containerRec}>
                                     <Text style={styles.textRecensione}>
-                                        {review.fullName} {"\n"}{"\n"}{review.descrizione}{"\n"}{"\n"}Valutazione: {"\n"}{review.voto}
+                                        {review.fullName} {"\n"}{review.descrizione}{"\n"}Valutazione: {review.voto}
                                     </Text>
 
                                 </View>
@@ -181,7 +189,7 @@ const styles = StyleSheet.create({
     },
     textRecensione: {
         color: '#121212',
-        fontSize: 17,
+        fontSize: 13,
         marginTop: 5,
         textAlign: 'center'
     },

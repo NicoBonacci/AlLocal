@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component, useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, } from 'react-native';
 
 import { getDatabase, ref, onValue, set } from 'firebase/database';
 
@@ -8,6 +8,7 @@ import { getDatabase, ref, onValue, set } from 'firebase/database';
 
 import { firebase } from '../react-native-firebase/config';
 import { doc, waitForPendingWrites } from 'firebase/firestore';
+import { Slider } from 'react-native-elements';
 
 export default function App({ navigation, route }) {
 
@@ -15,48 +16,49 @@ export default function App({ navigation, route }) {
   const currentUser = firebase.auth().currentUser;
 
   const [update, setUpdate] = useState(false);
+  const [valutazione, setValutazione] = useState('');
 
-    const prodId = route.params.prodottoId;
+  const prodId = route.params.prodottoId;
 
-   
+
   const storingRecensione = () => {
 
 
-      firebase.firestore().collection('users')
-          .where('id', '==', currentUser.uid)
-          .get().then((userDownloaded) => {
+    firebase.firestore().collection('users')
+      .where('id', '==', currentUser.uid)
+      .get().then((userDownloaded) => {
 
-              userDownloaded
-                  .docs
-                  .forEach(doc => {
-                      try {
-                          const pid = firebase.firestore().collection("recensioni").doc().id;
-                          const db = firebase.firestore();
-                          db.collection("recensioni")
-                              .doc(pid)
-                              .set({
-                                  Postid: pid,
-                                  UserId: currentUser.uid,
-                                  Post: post,
-                                  prodottoId: prodId,
-                                  fullName: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
-                                  voto: 0,
-                              })
-                              .then(() => {
-                                  Alert.alert('post inserito!');
-                              })
-                          setPost('');
-                      } catch (err) {
-                          Alert.alert("there is something waitForPendingWrites", err.messsage);
-                      }
+        userDownloaded
+          .docs
+          .forEach(doc => {
+            try {
+              const pid = firebase.firestore().collection("recensioni").doc().id;
+              const db = firebase.firestore();
+              db.collection("recensioni")
+                .doc(pid)
+                .set({
+                  Postid: pid,
+                  UserId: currentUser.uid,
+                  Post: post,
+                  prodottoId: prodId,
+                  fullName: doc._delegate._document.data.value.mapValue.fields.fullName.stringValue,
+                  voto: parseInt(valutazione),
+                })
+                .then(() => {
+                  Alert.alert('post inserito!');
+                })
+              setPost('');
+            } catch (err) {
+              Alert.alert("there is something waitForPendingWrites", err.messsage);
+            }
 
 
 
-                      });
+          });
 
-              });
+      });
 
- 
+
   }
 
 
@@ -69,10 +71,20 @@ export default function App({ navigation, route }) {
           style={styles.input}
           placeholder='Recensione'
           placeholderTextColor="#aaaaaa"
+          multiline
+          numberOfLines={4}
           onChangeText={(text) => setPost(text)}
-          //value={text}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+        />
+      </View>
+      
+      <View>
+        <Slider
+          style={{ width: 300, marginLeft: 40, marginRight: 25}}
+          minimumValue={1}
+          maximumValue={5}
+          onValueChange={(value) => parseInt(setValutazione(value))}
         />
       </View>
       <View>

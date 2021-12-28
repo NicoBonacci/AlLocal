@@ -12,9 +12,8 @@ export default function App({ navigation, route }) {
     const [downloadProduct, setDownloadProduct] = useState(false);
     var mailAz = route.params.mail;
 
-    useEffect(() => {
-        if (downloadProduct == false) {
-            firebase.firestore().collection('prodotti')
+    const fetchAzienda = async () =>{
+        firebase.firestore().collection('prodotti')
                 .where('AziendaId', '==', route.params.id)
                 .get()
                 .then(snapshot => {
@@ -32,12 +31,20 @@ export default function App({ navigation, route }) {
                             });
                         });
                     setAllProducts(product);
+                    setDownloadProduct(true);
                 });
 
-            setDownloadProduct(true);
-        }
-    });
+            
+    }
 
+    useEffect(() => {
+        fetchAzienda();
+    }, [])
+
+    useEffect(() => {
+        fetchAzienda();
+        setDownloadProduct(false);
+    }, [downloadProduct])
 
     return (
 

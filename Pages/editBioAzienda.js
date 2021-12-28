@@ -62,10 +62,7 @@ export default function App({ route }) {
             const response = await fetch(newUri);
             const blob = await response.blob();
             var ref = firebase.storage().ref().child("images/" + fileName);
-
             
-
-
             const snapshot = await ref.put(blob);
             setUploading(false);
             const imgUrl = await snapshot.ref.getDownloadURL();
