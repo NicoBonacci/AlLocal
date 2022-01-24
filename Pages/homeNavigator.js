@@ -57,7 +57,7 @@ export default function App({ navigation }) {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name=" " component={Home} />
+      <Stack.Screen name=" " component={Home} options={{headerShown: false}}/>
       <Stack.Screen name="Azienda" component={Azienda} />
   
       <Stack.Screen name="Product" component={Product} />

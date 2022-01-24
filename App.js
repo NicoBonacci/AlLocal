@@ -73,23 +73,23 @@ export default function App({ navigation }) {
           })}
           >
         {user ? (
-          <Tab.Screen name="Home" >
+          <Tab.Screen name="Home" options={{headerShown: false}}>
             {props => <Home {...props} extraData={user} />}
           </Tab.Screen>
         ) : (
           <>
-            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Home" component={Home} options={{headerShown: false}}/>
           </>
         )}
 
         {user ? (
-          <Tab.Screen name="Account" >
-            {props => <Account {...props} extraData={user} />}
+          <Tab.Screen name="Account" options={{headerShown: false}}>
+            {props => <Account {...props} extraData={user} options={{headerShown: false}}/>}
            
           </Tab.Screen>
         ) : (
           <>
-            <Tab.Screen name="Account" component={Account} />
+            <Tab.Screen name="Account" component={Account} options={{headerShown: false}}/>
           </>
         )}
       </Tab.Navigator>

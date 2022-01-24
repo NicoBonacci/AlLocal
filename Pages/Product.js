@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Button, StyleSheet, Text, View, Image, Touchable } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-navigation';
 
 
@@ -38,7 +38,7 @@ export default function App({ navigation, route }) {
                 setAllReview(review);
                 setDownloadReview(true);
             });
-            
+
 
     }
 
@@ -62,7 +62,6 @@ export default function App({ navigation, route }) {
                 <View style={styles.imageRow} >
                     <Image source={{ uri: route.params.photo }}
                         style={styles.image}>
-
                     </Image>
                     <ScrollView>
                         <Text style={styles.prodottoText}>
@@ -71,10 +70,13 @@ export default function App({ navigation, route }) {
                     </ScrollView>
                 </View>
             </View>
+
             <View style={styles.titolorec}>
                 <Text style={styles.titleRecesioni}>Review: </Text>
             </View>
+
             <View style={styles.containerRecensioni}>
+
                 <View style={styles.containerRow}>
                     <SafeAreaView>
                         <ScrollView horizontal>
@@ -83,7 +85,7 @@ export default function App({ navigation, route }) {
 
                                 <View style={styles.containerRec}>
                                     <Text style={styles.textRecensione}>
-                                        {review.fullName} {"\n"}{review.descrizione}{"\n"}Valutazione: {review.voto}
+                                        {review.nome} {"\n"}{"\n"}{review.descrizione}{"\n"}{"\n"}Valutazione: {review.voto}
                                     </Text>
 
                                 </View>
@@ -98,27 +100,37 @@ export default function App({ navigation, route }) {
 
             <View style={styles.containerButton}>
                 {currentUser ?
-                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-                        <Button title="fai recensione" onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}
-                            color="#841584" />
-                    </View>
+
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}>
+                        <Text style={styles.buttonTitle}>Recensione</Text>
+                    </TouchableOpacity>
+
                     :
 
-                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-                        <Button title="fai recensione" onPress={() => navigation.navigate('login')}
-                            color="#841584" />
-                    </View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}>
+                        <Text style={styles.buttonTitle}>Recensione</Text>
+                    </TouchableOpacity>
                 }
 
                 {currentUser ?
-                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                        <Button title="prenota" onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })} />
-                    </View>
+
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
+                        <Text style={styles.buttonTitle}>Prenota</Text>
+                    </TouchableOpacity>
+
                     :
 
-                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                        <Button title="prenota" onPress={() => navigation.navigate('login')} />
-                    </View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
+                        <Text style={styles.buttonTitle}>Prenota</Text>
+                    </TouchableOpacity>
 
                 }
             </View>
@@ -133,23 +145,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         //alignItems: 'center',
         //justifyContent: 'center',
-        padding: 10,
+        padding: '3%',
     },
     containerName: {
-        flex: 1,
+        flex: 0.75,
         backgroundColor: '#fff',
-        borderBottomWidth: 1,
+        //borderBottomWidth: 1,
         borderColor: '#000',
     },
     nameText: {
-        color: '#121212',
-        fontSize: 34,
+        color: '#000',
+        fontSize: 30,
         textAlign: 'center',
     },
     containerBio: {
-        flex: 2.5,
-        backgroundColor: '#E6E6E6',
-        borderBottomWidth: 1,
+        flex: 2.25,
+        backgroundColor: '#E4F5F7',
+        //borderBottomWidth: 1,
+        borderWidth: 3,
+        borderRadius: 10,
         borderColor: '#000',
     },
     imageRow: {
@@ -159,15 +173,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     prodottoText: {
-        color: '#121212',
-        fontSize: 20,
+        color: '#000',
+        fontSize: 18,
         textAlign: 'center',
     },
     containerRecensioni: {
         flex: 2,
         backgroundColor: '#fff',
         flexDirection: 'row',
-        borderBottomWidth: 1,
+        //borderBottomWidth: 1,
         borderColor: '#000',
     },
     containerRow: {
@@ -180,7 +194,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E6E6E6",
+        backgroundColor: "#E4F5F7",
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
@@ -188,13 +202,13 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     textRecensione: {
-        color: '#121212',
-        fontSize: 13,
-        marginTop: 5,
+        color: '#000',
+        fontSize: 15,
+        marginTop: 10,
         textAlign: 'center'
     },
     titleRecesioni: {
-        color: "#121212",
+        color: "#000",
         fontSize: 30,
         marginTop: 15,
         //marginLeft: 8
@@ -207,16 +221,37 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginBottom: '-12%',
     },
     image: {
-        width: 90,
-        height: 97
+        width: '38%',
+        height: '55%'
     },
     titolorec: {
-        flex: 1,
+        flex: 0.75,
         backgroundColor: '#fff',
+        marginTop: '0%',
+    },
+    button: {
+        backgroundColor: '#788eec',
+        //marginLeft: 30,
+        //marginRight: 30,
         marginTop: 10,
-    }
+        height: 45,
+        width: '100%',
+        borderRadius: 5,
+        borderWidth: 2,
+        alignItems: "center",
+        justifyContent: 'center',
+        textAlign: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+
+
 
 
 });

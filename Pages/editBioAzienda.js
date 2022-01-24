@@ -152,10 +152,10 @@ export default function App({ route }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder="prova"
+                        placeholder="inserisci qui la nuova biografia"
                         placeholderTextColor="#aaaaaa"
                         multiline
-                        numberOfLines={4}
+                        numberOfLines={5}
                         onChangeText={(text) => setNewDescrizione(text)}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"

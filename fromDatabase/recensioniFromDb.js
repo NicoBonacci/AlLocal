@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, Alert,TouchableOpacity } from 'react-native';
 
 import { firebase } from '../react-native-firebase/config';
 
@@ -106,7 +106,7 @@ function recensioniFromDb() {
                                 return (
                                     <View>
                                         <View style={styles.containerRec}>
-                                            <Text>{recensione.Post}</Text>
+                                            <Text style={styles.recPost}>{recensione.Post}</Text>
 
                                         </View>
                                         <View>
@@ -121,16 +121,20 @@ function recensioniFromDb() {
                                             />
                                         </View>
 
-                                        <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-
-                                            <Button title="Edit"
-                                                onPress={() => editRecensione(recensione.Postid)}
-                                                color="#841584" />
+                                        <View>
+                                            <TouchableOpacity
+                                                style={styles.button}
+                                                onPress={() => editRecensione(recensione.Postid)}>
+                                                <Text style={styles.buttonTitle}>Edit</Text>
+                                            </TouchableOpacity>
                                         </View>
 
-                                        <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                                            <Button title="X"
-                                                onPress={() => deleteRecensione(recensione.Postid)} />
+                                        <View style={styles.footer}>
+                                            <TouchableOpacity
+                                                style={styles.button}
+                                                onPress={() => deleteRecensione(recensione.Postid)}>
+                                                <Text style={styles.buttonTitle}>Delete</Text>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
 
@@ -176,13 +180,16 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E6E6E6",
+        backgroundColor: "#E4F5F7",
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
-        marginTop: 10,
-        marginBottom: 10
-
+    },
+    recPost: {
+        color: '#000',
+        fontSize: 15,
+        margin: '5%',
+        textAlign: 'center'
     },
     input: {
         height: 48,
@@ -195,6 +202,24 @@ const styles = StyleSheet.create({
         marginRight: 30,
         paddingLeft: 16
     },
+    button: {
+        backgroundColor: '#788eec',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        height: 48,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    footer:{
+        marginBottom: '5%'
+    }
 })
 
 export default recensioniFromDb;

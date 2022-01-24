@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, TouchableOpacity } from 'react-native';
 
 import logo from '../assets/AllLocal_logo.png';
 import home from '../assets/HomeLogo.png';
@@ -45,10 +45,17 @@ export default function Account(props) {
 
     }
 
+    const onSignoutPress = () => {
+        firebase.auth().signOut()
+        .then(console.log('signed out'))
+    }
+
+
     return (
 
-        <SafeAreaView style={styles.container_main}>
-            <View style={styles.main_up}>
+
+        <View style={styles.container_main}>
+            {/*<View style={styles.main_up}>
                 <View style={styles.up_logo}>
                     <Image style={{ width: '31%', height: '100%' }}
                         source={logo} />
@@ -57,127 +64,193 @@ export default function Account(props) {
                     <Image style={{ width: '31%', height: '100%' }}
                         source={home} />
                 </View>
-            </View>
+    </View>*/}
+
             <View style={styles.main_center}>
                 <View style={styles.center_name}>
-                    <Text style={{ fontSize: 15 }}>Hi {props.extraData.fullName}</Text>
+                    <Text style={styles.nameText}>Hi {props.extraData.fullName}</Text>
                 </View>
-                <View style={styles.center_changePassword}>
-
-                    <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 10, marginTop: 10 }}>Change your password!</Text>
-
-                    <View style={styles.center_changePasswordBox}>
-                        <TextInput
-                            style={styles.input}
-                            placeholderTextColor="#aaaaaa"
-                            secureTextEntry
-                            placeholder='Insert new password'
-                            onChangeText={(text) => setPassword(text)}
-                            value={password}
-                            underlineColorAndroid="transparent"
-                            autoCapitalize="none"
-                        />
-                        <Button title="Change password" onPress={() => onChangePasswordPress()} />
-                    </View>
+                <View style={styles.centerButton}>
+                
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => props.navigation.navigate("Cambio Password")}>
+                        <Text style={styles.buttonTitle}>Cambio password</Text>
+                    </TouchableOpacity>
 
                 </View>
+
+                {isuser ?
+                    <>
+                        <View style={styles.titolorec}>
+                            <Text style={styles.textRecensione}>{varNameList}:</Text>
+                        </View>
+                    </>
+                    : // condizione di if elese per presentazione della lista tra utente e azienda 
+                    <>
+                        <View style={styles.containerBio}>
+                            <AziendaFromDb />
+                        </View>
+
+                        <View style={styles.centerButton}>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => props.navigation.navigate("Aggiungi prodotto")}>
+                                <Text style={styles.buttonTitle}>Aggiungi prodotto</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => props.navigation.navigate("Modifica biografia")}>
+                                <Text style={styles.buttonTitle}>modifica biografia </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.titolorec}>
+                            <Text style={styles.textRecensione}>{varNameList}:</Text>
+                        </View>
+
+                    </>
+                }
+
+                <View style={styles.main_down}>
+                    {isuser ?
+                        <>
+                            <View style={styles.containerRecensioni}>
+                                <RecensioniFromDb />
+                            </View>
+                        </>
+                        : // condizione di if elese per presentazione della lista tra utente e azienda 
+                        <>
+                            <View style={styles.containerRecensioni}>
+                                <ProdottiFromDb />
+                            </View>
+
+                        </>
+                    }
+
+                </View>
+
             </View>
 
-            {isuser ?
-                <>
-                    <View style={styles.titolorec}>
-
-                        <Text style={styles.textRecensione}>{varNameList}:</Text>
-                    </View>
-                    <View style={styles.containerRecensioni}>
-                        <RecensioniFromDb />
-                    </View>
-                </>
-
-                : // condizione di if elese per presentazione della lista tra utente e azienda 
-
-                <>
-                    <View style={styles.titolorec}>
-                        <Text style={styles.textRecensione}>{varNameList}:</Text>
-
-                    </View>
-                    <AziendaFromDb />
-
-
-                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-                        <Button title="aggiungi un prodotto" onPress={() => props.navigation.navigate("Aggiungi prodotto")} />
-                        
-                    </View>
-                    <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-                        <Button title="modifica biografia azienda"
-                        onPress={() => props.navigation.navigate("Modifica biografia")} 
-                        />
-                    </View>
-
-
-                    <View style={styles.containerRecensioni}>
-                        <ProdottiFromDb />
-                    </View>
-
-                </>
-            }
-
-        </SafeAreaView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container_main: {
         flex: 1,
-        width: '100%',
-        height: '100%',
-        alignItems: 'flex-start',
-        padding: 20,
+        alignItems: 'center',
+        padding: '3%',
+        backgroundColor: '#fff',
+        //marginTop: '3%',
     },
     main_up: {
+        //flex: 0.2,
         width: '100%',
         height: '7%',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     up_logo: {
-        flex: 1,
+        //flex: 1,
         width: '50%',
         height: '100%',
         paddingLeft: 30,
+        marginTop: '2%'
     },
     up_home: {
-        flex: 1,
+        //flex: 1,
         width: '50%',
         height: '100%',
         flexDirection: 'row-reverse',
         paddingLeft: 20,
+        marginTop: '3%'
     },
     main_center: {
-        width: '100%',
-        height: '23%',
+        flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: "3%"
     },
     center_name: {
-        width: '95%',
-        height: '25%',
+        flex: 0.75,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#fff',
+        marginTop: '20%',
     },
+    nameText: {
+        color: '#000',
+        fontSize: 30,
+        textAlign: 'center',
+    },
+    centerButton: {
+        flex: 1,
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        marginLeft: '2%'
+    },
+    titolorec: {
+        flex: 0.75,
+        backgroundColor: '#fff',
+    },
+    textRecensione: {
+        color: '#000',
+        textAlign: 'center',
+        fontSize: 15,
+    },
+
+    main_down: {
+        flex: 2.5,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    containerRecensioni: {
+        backgroundColor: '#fff',
+    },
+    containerBio: {
+        flex: 2.0,
+        backgroundColor: '#E4F5F7',
+        flexDirection: 'row',
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: '#000',
+    },
+    
+    
+    input: {
+        height: '100%',
+        width: '45%',
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: 'grey',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 15,
+        paddingLeft: 16
+    },
+
+
+
+
+
+
     center_changePassword: {
-        width: '95%',
-        height: '75%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        //width: '95%',
+        //height: '75%',
+
     },
     center_changePasswordBox: {
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 10,
-    },
-    main_down: {
-        width: '100%',
-        height: '70%',
-        padding: 20,
     },
     down_Text: {
         width: '70%',
@@ -198,27 +271,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 5,
     },
-    input: {
-        height: '100%',
-        width: '45%',
-        borderRadius: 5,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 15,
-        paddingLeft: 16
-    },
-    containerRecensioni: {
-        flex: 2.5,
-        width: "100%",
-        height: "100%",
-        backgroundColor: '#fff',
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderColor: '#000',
-    },
+    
+
+
     containerRow: {
         flex: 1,
         flexDirection: 'row',
@@ -255,5 +310,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 20,
         textAlign: "center",
+    },
+    button: {
+        backgroundColor: '#788eec',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        height: 48,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold",
+        margin: '3%'
+    },
+    footer: {
+        marginBottom: '5%'
     }
 });

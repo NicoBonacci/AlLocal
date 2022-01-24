@@ -67,25 +67,34 @@ export default function App({ navigation, route }) {
     <View style={styles.container}>
 
       <View>
+        <Text style={styles.title}>Recesnsione:</Text>
         <TextInput
           style={styles.input}
           placeholder='Recensione'
           placeholderTextColor="#aaaaaa"
           multiline
-          numberOfLines={4}
+          numberOfLines={5}
           onChangeText={(text) => setPost(text)}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
       </View>
-      
+
       <View>
+        <Text style={styles.title}>Valutazione:</Text>
         <Slider
-          style={{ width: 300, marginLeft: 40, marginRight: 25}}
+          style={{ width: 300, marginLeft: 40, marginRight: 25 }}
           minimumValue={1}
           maximumValue={5}
+          thumbTintColor='#788eec'
+          maximumTrackTintColor='#000'
+          minimumTrackTintColor='#000'
+          //onSlidingStart
+          //onSlidingComplete
+          tapToSeek = 'false'
           onValueChange={(value) => parseInt(setValutazione(value))}
         />
+        <Text style={styles.title}>{ parseInt(valutazione)}</Text>
       </View>
       <View>
         <TouchableOpacity
@@ -93,8 +102,6 @@ export default function App({ navigation, route }) {
           onPress={() => storingRecensione()}>
           <Text style={styles.buttonTitle}>store</Text>
         </TouchableOpacity>
-
-
       </View>
 
 
@@ -108,9 +115,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderColor: '#000',
+    padding: '2%'
   },
   title: {
-
+    color: '#000',
+    fontSize: 25,
+    textAlign: 'center',
   },
   logo: {
     flex: 1,

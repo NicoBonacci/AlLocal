@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { firebase } from '../react-native-firebase/config';
 
@@ -27,7 +27,7 @@ export default function ProdottiFromDb() {
     const [newPost, setNewPost] = useState(null);
 
     const editValue = null;
-    
+
     const fetchProdotti = async () => {
 
         const list = [];
@@ -85,49 +85,50 @@ export default function ProdottiFromDb() {
         <View style={styles.containerRow}>
             <SafeAreaView>
                 <ScrollView>
-                    {/*<AziendaFromDb />*/}
-
                     {
                         prodotti && prodotti.map(prodotto => {
                             if (User.uid == prodotto.AziendaId) {
                                 return (
                                     <View>
+                                        <View style={styles.containerRec}>
+                                            <View style={styles.imageRow} >
+                                                <Image source={{ uri: prodotto.Foto }}
+                                                    style={styles.image}>
+                                                </Image>
+                                                <ScrollView>
+                                                    <Text style={styles.prodottoText}>
+                                                        {prodotto.Nome}
+                                                    </Text>
+                                                    <Text style={styles.prodottoText}>
+                                                        {prodotto.Descrizione}
+                                                    </Text>
+                                                    <Text style={styles.prodottoText}>
+                                                        {prodotto.Prezzo}€
+                                                    </Text>
+                                                    <Text style={styles.prodottoText}>
+                                                        {prodotto.MediaVoto}
+                                                    </Text>
 
-                                        <View style={styles.imageRow} >
-                                            <Image source={{ uri: prodotto.Foto }}
-                                                style={styles.image}>
-                                            </Image>
-                                            <ScrollView>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.Nome}
-                                                </Text>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.Descrizione}
-                                                </Text>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.Prezzo}€
-                                                </Text>
-                                                <Text style={styles.prodottoText}>
-                                                    {prodotto.MediaVoto}
-                                                </Text>
-
-                                            </ScrollView>
+                                                </ScrollView>
+                                            </View>
                                         </View>
 
-                                        <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'yellow' }}>
-                                            <Button title="X"
-                                                onPress={() => deleteProdotto(prodotto.Prodottoid)} />
+                                        <View>
+                                            <TouchableOpacity
+                                                style={styles.button}
+                                                onPress={() => deleteProdotto(prodotto.Prodottoid)}>
+                                                <Text style={styles.buttonTitle}>X</Text>
+                                            </TouchableOpacity>
                                         </View>
 
-                                        <View style={{ borderRadius: 5, borderWidth: 2, height: 45, textAlign: 'center', marginTop: 10, backgroundColor: 'green' }}>
-
-                                            <Button title="modifica prodotto"
-                                                color="#841584"
+                                        <View>
+                                            <TouchableOpacity
+                                                style={styles.button}
                                                 onPress={() => navigation.navigate("Edit Prodotto",
-                                                { desc: prodotto.Descrizione, idProdotto:prodotto.Prodottoid , name: prodotto.Nome, prezzo: prodotto.Prezzo, immagine:prodotto.Foto})} />
-
+                                                    { desc: prodotto.Descrizione, idProdotto: prodotto.Prodottoid, name: prodotto.Nome, prezzo: prodotto.Prezzo, immagine: prodotto.Foto })}>
+                                                <Text style={styles.buttonTitle}>modifica prodotto</Text>
+                                            </TouchableOpacity>
                                         </View>
-
 
                                     </View>
 
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E6E6E6",
+        backgroundColor: "#E4F5F7",
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
@@ -195,6 +196,7 @@ const styles = StyleSheet.create({
     imageRow: {
         flex: 1,
         flexDirection: 'row',
+        margin: '2%',
     },
     prodottoText: {
         color: '#121212',
@@ -204,5 +206,20 @@ const styles = StyleSheet.create({
     image: {
         width: 90,
         height: 97
+    },
+    button: {
+        backgroundColor: '#788eec',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        height: 48,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold"
     },
 })

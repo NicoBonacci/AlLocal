@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View,Image } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -12,29 +12,29 @@ export default function App({ navigation, route }) {
     const [downloadProduct, setDownloadProduct] = useState(false);
     var mailAz = route.params.mail;
 
-    const fetchAzienda = async () =>{
+    const fetchAzienda = async () => {
         firebase.firestore().collection('prodotti')
-                .where('AziendaId', '==', route.params.id)
-                .get()
-                .then(snapshot => {
-                    const product = [];
+            .where('AziendaId', '==', route.params.id)
+            .get()
+            .then(snapshot => {
+                const product = [];
 
-                    snapshot
-                        .docs
-                        .forEach(doc => {
-                            product.push({
-                                idProd: doc._delegate._document.data.value.mapValue.fields.Prodottoid.stringValue,
-                                descrizione: doc._delegate._document.data.value.mapValue.fields.Descrizione.stringValue,
-                                urlPhotoProd: doc._delegate._document.data.value.mapValue.fields.Foto.stringValue,
-                                nome: doc._delegate._document.data.value.mapValue.fields.Nome.stringValue,
-                                prezzo: doc._delegate._document.data.value.mapValue.fields.Prezzo.integerValue,
-                            });
+                snapshot
+                    .docs
+                    .forEach(doc => {
+                        product.push({
+                            idProd: doc._delegate._document.data.value.mapValue.fields.Prodottoid.stringValue,
+                            descrizione: doc._delegate._document.data.value.mapValue.fields.Descrizione.stringValue,
+                            urlPhotoProd: doc._delegate._document.data.value.mapValue.fields.Foto.stringValue,
+                            nome: doc._delegate._document.data.value.mapValue.fields.Nome.stringValue,
+                            prezzo: doc._delegate._document.data.value.mapValue.fields.Prezzo.integerValue,
                         });
-                    setAllProducts(product);
-                    setDownloadProduct(true);
-                });
+                    });
+                setAllProducts(product);
+                setDownloadProduct(true);
+            });
 
-            
+
     }
 
     useEffect(() => {
@@ -74,15 +74,30 @@ export default function App({ navigation, route }) {
 
                             {allProducts ? allProducts.map((product) => (
 
-                             <TouchableOpacity
+                                <TouchableOpacity
                                     style={styles.rectContenutoProdotto}
                                     onPress={() => navigation.navigate('Product', { descProd: product.descrizione, photo: product.urlPhotoProd, nome: product.nome, id: product.idProd, prezzo: product.prezzo, emailAz: mailAz })}>
 
-                                    <Text style={{ marginRight: 5, marginLeft: 5, marginBottom: 5, fontSize: 30}}>
-                                       {product.nome}
-                                    </Text>
+                                    {/*<Text style={{
+                                        color: '#000',
+                                        fontSize: 30,
+                                        marginTop: '15%',
+                                        textAlign: 'center'
+                                    }}>
+                                        {product.nome}
+                                </Text>*/}
 
-                            </TouchableOpacity>
+                                    <View style={styles.imageRow} >
+                                        <Image source={{ uri: product.urlPhotoProd }}
+                                            style={styles.image}>
+                                        </Image>
+
+                                        <Text style={styles.prodottoText}>
+                                            {product.nome}
+                                        </Text>
+                                    </View>
+
+                                </TouchableOpacity>
 
                             )) : null
                             }
@@ -99,7 +114,7 @@ export default function App({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        padding: '3%',
         backgroundColor: "#fff"
 
     },
@@ -107,48 +122,48 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     rectNomeAzienda: {
-        flex: 1,
+        flex: 0.75,
         //width: 309,
         //height: 68,
-        borderWidth: 0,
-        borderColor: "rgba(0,0,0,0.63)",
-        borderStyle: "solid",
-        overflow: "hidden",
-        backgroundColor: "#fff",
+        //borderWidth: 0,
+        borderColor: '#000',
+        //borderStyle: "solid",
+        //overflow: "hidden",
+        //backgroundColor: "#fff",
         //marginTop: 83,
         //marginLeft: 34
     },
     nomeAzienda: {
-        color: "#121212",
-        fontSize: 34,
+        color: "#000",
+        fontSize: 30,
         textAlign: "center",
-        marginTop: 10,
-        marginBottom: 10
+        //marginTop: 10,
+        //marginBottom: 10
         //marginLeft: 32
     },
     rectdescrizioneAzienda: {
         flex: 2.5,
         //width: 309,
         //height: 216,
-        backgroundColor: "#E6E6E6",
+        backgroundColor: "#E4F5F7",
         //marginTop: 28,
         //marginLeft: 34
-        borderWidth: 2,
-
-
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: '#000'
     },
     testoDescrizione: {
-        color: "#121212",
-        fontSize: 15,
-        marginTop: 10,
-        //marginLeft: 8
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        color: "#000",
+        fontSize: 20,
+        marginTop: '3%',
+        marginLeft: '3%',
+        marginBottom: '3%',
+        marginLeft: '3%',
+        marginRight: '3%',
 
     },
     testoProduct: {
-        color: "#121212",
+        color: "#000",
         fontSize: 30,
         marginTop: 15,
         //marginLeft: 8
@@ -157,33 +172,34 @@ const styles = StyleSheet.create({
         marginRight: 10,
 
     },
-    titoloProdotti:{
-        flex: 1,
+    titoloProdotti: {
+        flex: 0.75,
         backgroundColor: '#fff',
-        marginTop: 10,
+        marginTop: '0%',
     },
     rectProdotti: {
-        flex: 3.5,
+        flex: 2.25,
         //width: 309,
         //height: 200,
         backgroundColor: "#fff",
         flexDirection: "row",
         //marginTop: 37,
         //marginLeft: 33
-        borderTopWidth: 2
+        //borderTopWidth: 2
     },
     rectContenutoProdotto: {
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E6E6E6",
+        backgroundColor: "#E4F5F7",
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
         marginLeft: 10,
         marginRight: 10,
-        alignItems: 'center',
-        paddingTop:'20%'
+        //alignItems: 'center',
+        //paddingTop:'20%'
+        //textAlign: 'center'
     },
     rectProdottiRow: {
         //height: 64,
@@ -195,5 +211,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-    }
+    },
+    image: {
+        width: '38%',
+        height: '55%'
+    },
+    imageRow: {
+        flex: 1,
+        marginLeft: 0,
+        marginTop: '10%',
+        marginLeft: '5%',
+        flexDirection: 'row',
+
+    },
+    prodottoText: {
+        color: '#000',
+        fontSize: 25,
+        textAlign: 'center',
+        marginLeft: '5%',
+    },
 });

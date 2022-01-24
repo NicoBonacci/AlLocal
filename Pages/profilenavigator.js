@@ -20,6 +20,7 @@ import AggiungiProdotto from "./aggiungiProdotto.js";
 import Account from "./account";
 import EditProdotto from "./editProdotto";
 import EditBioAzienda from "./editBioAzienda";
+import CambioPassword from "./cambioPassword";
 
 
 import { decode, encode } from 'base-64'
@@ -77,14 +78,19 @@ export default function App({ navigation }) {
     <Stack.Navigator>
       {user ? (
         <>
-          <Stack.Screen name="account">
+          <Stack.Screen name="account" options={{headerShown: false}}>
             {props => <Account {...props} extraData={user} />}
           </Stack.Screen>
           <Stack.Screen name="Aggiungi prodotto">
             {props => <AggiungiProdotto {...props} extraData={user} />}
           </Stack.Screen>
+
           <Stack.Screen name="Modifica biografia" component={EditBioAzienda} />
-          <Stack.Screen name="Edit Prodotto" component={EditProdotto}/>
+          <Stack.Screen name="Edit Prodotto" component={EditProdotto} />
+          <Stack.Screen name="Cambio Password" >
+            {props => <CambioPassword {...props} extraData={user} />}
+          </Stack.Screen>
+          
 
         </>
       ) : (

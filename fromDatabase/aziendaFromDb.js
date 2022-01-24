@@ -20,7 +20,7 @@ export default function ProdottiFromDb() {
 
     const [aziende, setAziende] = useState([])
     const [newPost, setNewPost] = useState(null);
-    const [edit,setEdit] = useState(false);
+    const [edit, setEdit] = useState(false);
 
     const editValue = null;
 
@@ -54,48 +54,37 @@ export default function ProdottiFromDb() {
     const value = null;
 
     return (
-
-        <View style={styles.containerRow}>
-            <SafeAreaView>
-                <ScrollView>
-                    <View style={styles.containerNew} >
-                    {
-                        aziende && aziende.map(azienda => {
-                            if (User.uid == azienda.id) {
-                                return (
-                                    <View style={styles.containerBio}>
-                                        <View style={styles.imageRow} >
-                                            <Image source={{ uri: azienda.responseImage }}
-                                                style={styles.image}>
-                                            </Image>
-                                            <ScrollView>
-                                                <Text style={styles.prodottoText}>
-                                                    {azienda.companyDescription}
-                                                </Text>
-                                            </ScrollView>
-                                        </View>
-
-
-                                    </View>
-
-                                )
-                            }
-
-                        })
+        <View style={styles.container}>
+            {
+                aziende && aziende.map(azienda => {
+                    if (User.uid == azienda.id) {
+                        return (
+                                <View style={styles.imageRow} >
+                                    <Image source={{ uri: azienda.responseImage }}
+                                        style={styles.image}>
+                                    </Image>
+                                    <ScrollView>
+                                        <Text style={styles.prodottoText}>
+                                            {azienda.companyDescription}
+                                        </Text>
+                                    </ScrollView>
+                                </View>
+                        )
                     }
-                    </View>
 
-                </ScrollView>
-            </SafeAreaView>
+                })
+            }
         </View>
     );
+
+    
 
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingBottom: 22
+        padding: '3%'
     },
     preloader: {
         left: 0,
@@ -107,7 +96,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     containerRow: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -116,12 +105,10 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E6E6E6",
+        backgroundColor: "#E4F5F7",
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
-        marginTop: 10,
-        marginBottom: 10
 
     },
     input: {
@@ -138,6 +125,7 @@ const styles = StyleSheet.create({
     imageRow: {
         flex: 1,
         flexDirection: 'row',
+        margin:'2%',
     },
     prodottoText: {
         color: '#121212',
@@ -150,9 +138,10 @@ const styles = StyleSheet.create({
     },
     containerBio: {
         flex: 2.5,
-        backgroundColor: '#E6E6E6',
-        borderBottomWidth: 1,
-        borderColor: '#000',
+        backgroundColor: "#E4F5F7",
+        borderWidth: 3,
+        borderColor: "#000000",
+        borderRadius: 5,
     },
     containerNew: {
         marginBottom: 15,

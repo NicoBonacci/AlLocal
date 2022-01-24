@@ -106,13 +106,13 @@ export default function App({ navigation }) {
     return (
         <View style={styles.main}>
             <View style={styles.up}>
-                <View style={styles.up_logo}>
+                {/*<View style={styles.up_logo}>
                     <View style={styles.up_logo_enter}>
                         <Image style={{ width: '100%', height: '100%' }}
                             source={logo}
                         />
                     </View>
-                </View>
+    </View>*/}
                 <View style={styles.up_search}>
                     <View style={styles.up_search_enter}>
                         {//ottiene la posizione della citta cercata nella barra di ricerca
@@ -190,11 +190,11 @@ export default function App({ navigation }) {
                     )) : null
                     }
                     {showDetails ?
-                        <View style={styles.down}>
-                        <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName, mail: mail })}>
-                            <Text style={styles.textCompany}>{companyName}</Text>
-                            <Image style={styles.picCompanyDimension} source={{ uri: urlOfImage }} />
-                        </TouchableOpacity>
+                        <View>
+                            <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName, mail: mail })}>
+                                <Text style={styles.textCompany}>{companyName}</Text>
+                                <Image style={styles.picCompanyDimension} source={{ uri: urlOfImage }} />
+                            </TouchableOpacity>
                         </View>
                         : null}
 
@@ -221,7 +221,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'flex-start',
-        padding: 10,
+        padding: '3%',
+        backgroundColor: '#fff',
     },
     up: {
         flexDirection: 'row',
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
     },
     center: {
         width: '100%',
-        height: '50%',
+        height: '80%',
         marginHorizontal: 0,
         flexGrow: 1,
 
@@ -238,9 +239,12 @@ const styles = StyleSheet.create({
     down: {
         width: '100%',
         height: '29%',
-        backgroundColor: '#fff',
+        backgroundColor: '#E4F5F7',
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: '#000',
     },
     up_logo: {
         width: '20%',
@@ -256,11 +260,15 @@ const styles = StyleSheet.create({
 
     },
     down_company: {
-        width: '92%',
-        height: '90%',
+        width: '100%',
+        height: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#EAEAEA',
+        backgroundColor: '#E4F5F7',
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: '#000',
+        margin: '5%'
     },
     up_logo_enter: {
 
@@ -286,16 +294,21 @@ const styles = StyleSheet.create({
     },
     mapViewStyle: {
         alignSelf: 'stretch',
-        height: '100%'
+        height: '100%',
+        padding: '10%',
+        // qui si puo modificare il rettangolino che viene fuori dell'azienda
     },
     textCompany: {
         fontSize: 25,
+        margin:'3%',
+        textAlign:'center',
 
     },
     picCompanyDimension: {
         marginTop: 15,
         width: '50%',
         height: '50%',
+        margin:'2%'
     }
 });
 
