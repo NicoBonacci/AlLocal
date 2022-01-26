@@ -190,7 +190,7 @@ export default function App({ navigation }) {
                     )) : null
                     }
                     {showDetails ?
-                        <View>
+                        <View style={styles.down}>
                             <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName, mail: mail })}>
                                 <Text style={styles.textCompany}>{companyName}</Text>
                                 <Image style={styles.picCompanyDimension} source={{ uri: urlOfImage }} />
@@ -215,14 +215,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
     main: {
         flex: 1,
         width: '100%',
         height: '100%',
         alignItems: 'flex-start',
         padding: '3%',
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
     },
     up: {
         flexDirection: 'row',
@@ -231,20 +230,14 @@ const styles = StyleSheet.create({
     },
     center: {
         width: '100%',
-        height: '80%',
+        height: '85%',
         marginHorizontal: 0,
         flexGrow: 1,
-
     },
     down: {
         width: '100%',
-        height: '29%',
-        backgroundColor: '#E4F5F7',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 3,
-        borderRadius: 10,
-        borderColor: '#000',
+        height: '30%',
+
     },
     up_logo: {
         width: '20%',
@@ -257,27 +250,23 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     down_company: {
         width: '100%',
-        height: '50%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#E4F5F7',
+        backgroundColor: '#F4F6F6',
         borderWidth: 3,
         borderRadius: 10,
         borderColor: '#000',
-        margin: '5%'
+        margin: '5%',
     },
     up_logo_enter: {
-
         width: '100%',
         height: '70%',
-
     },
     up_search_enter: {
-
         width: '100%',
         height: '40%',
     },

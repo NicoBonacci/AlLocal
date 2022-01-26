@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
         color: '#2e2e2d'
     },
     footerLink: {
-        color: "#788eec",
+        color: '#D95D39',
         fontWeight: "bold",
         fontSize: 16
     },
@@ -506,7 +506,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         margin: 8,
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
     },
 
     buttonInside_Pic_Update: {

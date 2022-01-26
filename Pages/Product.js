@@ -142,14 +142,14 @@ export default function App({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         //alignItems: 'center',
         //justifyContent: 'center',
         padding: '3%',
     },
     containerName: {
         flex: 0.75,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         //borderBottomWidth: 1,
         borderColor: '#000',
     },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     },
     containerBio: {
         flex: 2.25,
-        backgroundColor: '#E4F5F7',
+        backgroundColor: '#F4F6F6',
         //borderBottomWidth: 1,
         borderWidth: 3,
         borderRadius: 10,
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     },
     containerRecensioni: {
         flex: 2,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         flexDirection: 'row',
         //borderBottomWidth: 1,
         borderColor: '#000',
@@ -189,12 +189,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+
     },
     containerRec: {
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E4F5F7",
+        backgroundColor: '#F4F6F6',
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
     },
     containerButton: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: '-12%',
@@ -229,16 +230,16 @@ const styles = StyleSheet.create({
     },
     titolorec: {
         flex: 0.75,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         marginTop: '0%',
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         //marginLeft: 30,
         //marginRight: 30,
         marginTop: 10,
-        height: 45,
-        width: '100%',
+        height: 50,
+        width: 140,
         borderRadius: 5,
         borderWidth: 2,
         alignItems: "center",

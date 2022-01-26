@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         padding: '3%',
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         //marginTop: '3%',
     },
     main_up: {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
         flex: 0.75,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         marginTop: '20%',
     },
     nameText: {
@@ -187,32 +187,33 @@ const styles = StyleSheet.create({
     },
     centerButton: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         flexDirection: 'row',
         marginLeft: '2%'
     },
     titolorec: {
         flex: 0.75,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
     },
     textRecensione: {
         color: '#000',
         textAlign: 'center',
         fontSize: 15,
+
     },
 
     main_down: {
         flex: 2.5,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         justifyContent: 'center',
         alignItems: 'center'
     },
     containerRecensioni: {
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
     },
     containerBio: {
         flex: 2.0,
-        backgroundColor: '#E4F5F7',
+        backgroundColor: '#F4F6F6',
         flexDirection: 'row',
         borderWidth: 3,
         borderRadius: 10,
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
         width: '45%',
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'grey',
+        backgroundColor: 'white',
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 10,
@@ -270,6 +271,7 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         padding: 5,
+        backgroundColor: '#F4F6F6',
     },
     
 
@@ -312,7 +314,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,

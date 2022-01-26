@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         flexDirection: 'column',
+        backgroundColor: '#C6EBBE',
     },
     title: {
         width: '60%',
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+
        
     },
     desc_Inside: {
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
         
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,

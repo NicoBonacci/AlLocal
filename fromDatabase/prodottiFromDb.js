@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E4F5F7",
+        backgroundColor: '#F4F6F6',
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         height: 97
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,

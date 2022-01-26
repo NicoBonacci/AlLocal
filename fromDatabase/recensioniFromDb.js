@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E4F5F7",
+        backgroundColor: '#F4F6F6',
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,
@@ -190,12 +190,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         margin: '5%',
         textAlign: 'center'
+
     },
     input: {
         height: 48,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: '#F4F6F6',
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,

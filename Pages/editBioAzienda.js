@@ -268,7 +268,7 @@ export default function App({ route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 2,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         borderBottomWidth: 1,
         borderColor: '#000',
     },
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        backgroundColor: '#C6EBBE',
     },
     camera: {
         flex: 1,
@@ -344,7 +345,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         margin: 8,
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
     },
 
     buttonInside: {

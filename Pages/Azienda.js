@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: '3%',
-        backgroundColor: "#fff"
+        backgroundColor: '#C6EBBE',
 
     },
     container2: {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         flex: 2.5,
         //width: 309,
         //height: 216,
-        backgroundColor: "#E4F5F7",
+        backgroundColor: '#F4F6F6',
         //marginTop: 28,
         //marginLeft: 34
         borderWidth: 3,
@@ -174,14 +174,14 @@ const styles = StyleSheet.create({
     },
     titoloProdotti: {
         flex: 0.75,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         marginTop: '0%',
     },
     rectProdotti: {
         flex: 2.25,
         //width: 309,
         //height: 200,
-        backgroundColor: "#fff",
+        backgroundColor: '#C6EBBE',
         flexDirection: "row",
         //marginTop: 37,
         //marginLeft: 33
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 350,
         height: 150,
-        backgroundColor: "#E4F5F7",
+        backgroundColor: '#F4F6F6',
         borderWidth: 3,
         borderColor: "#000000",
         borderRadius: 5,

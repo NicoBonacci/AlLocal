@@ -61,7 +61,7 @@ export default function App({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 2,
-        backgroundColor: '#fff',
+        backgroundColor: '#C6EBBE',
         borderBottomWidth: 1,
         borderColor: '#000',
         padding: '2%'
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: "white",
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D95D39',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
