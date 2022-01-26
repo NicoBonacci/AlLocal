@@ -169,7 +169,7 @@ export default function App({ navigation }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder='nome del prodotto'
+                        placeholder='Name of product'
                         placeholderTextColor="#aaaaaa"
                         onChangeText={(text) => setNomeProdotto(text)}
                         underlineColorAndroid="transparent"
@@ -180,7 +180,7 @@ export default function App({ navigation }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder='descrizione'
+                        placeholder='Description'
                         placeholderTextColor="#aaaaaa"
                         multiline
                         numberOfLines={4}
@@ -193,7 +193,7 @@ export default function App({ navigation }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder='prezzo'
+                        placeholder='Price'
                         placeholderTextColor="#aaaaaa"
                         onChangeText={(number) => parseInt(setPrezzo(number))}
                         underlineColorAndroid="transparent"
@@ -297,9 +297,9 @@ export default function App({ navigation }) {
 
                 <View>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.buttonStore}
                         onPress={() => saveProdotto()}>
-                        <Text style={styles.buttonTitle}>store the product</Text>
+                        <Text style={styles.buttonTitle}>STORE PRODUCT</Text>
                     </TouchableOpacity>
 
 
@@ -390,6 +390,16 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         margin: 8,
+        backgroundColor: '#D95D39',
+    },
+    buttonStore: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 300,
+        height: 50,
+        marginLeft: '13%',
+        marginTop: '13%',
         backgroundColor: '#D95D39',
     },
 

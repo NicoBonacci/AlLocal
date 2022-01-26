@@ -179,7 +179,7 @@ export default function App({ route }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder="prova"
+                        placeholder='Insert new name'
                         placeholderTextColor="#aaaaaa"
                         onChangeText={(text) => setNewNomeProdotto(text)}
                         underlineColorAndroid="transparent"
@@ -190,7 +190,7 @@ export default function App({ route }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder="prova"
+                        placeholder="Insert new description"
                         placeholderTextColor="#aaaaaa"
                         multiline
                         numberOfLines={4}
@@ -203,7 +203,7 @@ export default function App({ route }) {
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder="prova"
+                        placeholder="Insert new price"
                         placeholderTextColor="#aaaaaa"
                         onChangeText={(number) => parseInt(setNewPrezzo(number))}
                         underlineColorAndroid="transparent"
@@ -304,9 +304,9 @@ export default function App({ route }) {
 
                 <View>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.buttonStore}
                         onPress={() => saveProdotto()}>
-                        <Text style={styles.buttonTitle}>store the product</Text>
+                        <Text style={styles.buttonTitle}>SAVE CHANGE</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -351,6 +351,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: "center",
         justifyContent: 'center'
+    },
+    buttonStore: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 300,
+        height: 50,
+        marginLeft: '13%',
+        marginTop: '13%',
+        backgroundColor: '#D95D39',
     },
     buttonTitle: {
         color: 'white',

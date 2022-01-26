@@ -255,9 +255,9 @@ export default function App({ route }) {
 
                 <View>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.buttonStore}
                         onPress={() => saveProdotto()}>
-                        <Text style={styles.buttonTitle}>store the product</Text>
+                        <Text style={styles.buttonTitle}>SAVE</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -321,6 +321,16 @@ const styles = StyleSheet.create({
         color: "#788eec",
         fontWeight: "bold",
         fontSize: 16
+    },
+    buttonStore: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 300,
+        height: 50,
+        marginLeft: '13%',
+        marginTop: '13%',
+        backgroundColor: '#D95D39',
     },
     container: {
         flex: 1,
