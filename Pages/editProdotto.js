@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { ScrollView } from 'react-native-gesture-handler';
 
-
+const editProdMessage = require('./editProdottoMessaggio')
 
 export default function App({ route }) {
 
@@ -22,6 +22,7 @@ export default function App({ route }) {
     const [newNomeProdotto, setNewNomeProdotto] = useState('');
     const [newPrezzo, setNewPrezzo] = useState('');
     const [newVoti, setNewVoti] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
 
     const [hasPermission, setHasPermission] = useState(null);
@@ -103,74 +104,79 @@ export default function App({ route }) {
 
 
     const saveProdotto = () => {
-        uploadImage().then((responseImage) => {
-            console.log(responseImage);
-            if (responseImage != null) {
-                try {
 
-                    const db = firebase.firestore();
-                    db.collection("prodotti")
-                        .doc(route.params.idProdotto)
-                        .update({
-                            Foto: responseImage,
-                        })
-                        .then(() => {
-                            console.log('foto aggiornata');
-                        })
-                } catch (err) {
-                    console.log('qualcosa non ha funzionato');
-                }
-            }
-            if (newDescrizione != '') {
-                try {
-                    const db = firebase.firestore();
-                    db.collection("prodotti")
-                        .doc(route.params.idProdotto)
-                        .update({
-                            Descrizione: newDescrizione,
-                        })
-                        .then(() => {
-                            console.log('descrizione aggiornata');
-                        })
-                }
-                catch {
-                    console.log('qualcosa non ha funzionato');
-                }
-            }
-            if (newNomeProdotto != '') {
-                try {
-                    const db = firebase.firestore();
-                    db.collection("prodotti")
-                        .doc(route.params.idProdotto)
-                        .update({
-                            Nome: newNomeProdotto,
-                        })
-                        .then(() => {
-                            console.log('nome prodotto aggiornato');
-                        })
-                }
-                catch {
-                    console.log('qualcosa non ha funzionato');
-                }
-            }
-            if (newPrezzo != '') {
-                try {
-                    const db = firebase.firestore();
-                    db.collection("prodotti")
-                        .doc(route.params.idProdotto)
-                        .update({
-                            Prezzo: newPrezzo,
-                        })
-                        .then(() => {
-                            console.log('prezzo prodotto aggiornato');
-                        })
-                }
-                catch {
-                    console.log('qualcosa non ha funzionato');
-                }
-            }
+        if (editProdMessage.checkForm(newNomeProdotto, newDescrizione, newPrezzo, setErrorMessage)) {
+            
+            uploadImage().then((responseImage) => {
+                console.log(responseImage);
+                if (responseImage != null) {
+                    try {
 
-        })
+                        const db = firebase.firestore();
+                        db.collection("prodotti")
+                            .doc(route.params.idProdotto)
+                            .update({
+                                Foto: responseImage,
+                            })
+                            .then(() => {
+                                console.log('foto aggiornata');
+                            })
+                    } catch (err) {
+                        console.log('qualcosa non ha funzionato');
+                    }
+                }
+                if (newDescrizione != '') {
+                    try {
+                        const db = firebase.firestore();
+                        db.collection("prodotti")
+                            .doc(route.params.idProdotto)
+                            .update({
+                                Descrizione: newDescrizione,
+                            })
+                            .then(() => {
+                                console.log('descrizione aggiornata');
+                            })
+                    }
+                    catch {
+                        console.log('qualcosa non ha funzionato');
+                    }
+                }
+                if (newNomeProdotto != '') {
+                    try {
+                        const db = firebase.firestore();
+                        db.collection("prodotti")
+                            .doc(route.params.idProdotto)
+                            .update({
+                                Nome: newNomeProdotto,
+                            })
+                            .then(() => {
+                                console.log('nome prodotto aggiornato');
+                            })
+                    }
+                    catch {
+                        console.log('qualcosa non ha funzionato');
+                    }
+                }
+                if (newPrezzo != '') {
+                    try {
+                        const db = firebase.firestore();
+                        db.collection("prodotti")
+                            .doc(route.params.idProdotto)
+                            .update({
+                                Prezzo: newPrezzo,
+                            })
+                            .then(() => {
+                                console.log('prezzo prodotto aggiornato');
+                            })
+                    }
+                    catch {
+                        console.log('qualcosa non ha funzionato');
+                    }
+                }
+
+            })
+        }
+
     }
 
     return (
@@ -193,7 +199,7 @@ export default function App({ route }) {
                         placeholder="Insert new description"
                         placeholderTextColor="#aaaaaa"
                         multiline
-                        numberOfLines={4}
+                        numberOfLines={5}
                         onChangeText={(text) => setNewDescrizione(text)}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"

@@ -6,10 +6,12 @@ import account from "./account";
 import RadioButtonRN from 'radio-buttons-react-native';
 import PicUpdate from './picUpdate';
 
-import  {  useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+
+const regMessage = require('./registrazioneMessage');
 
 export default function registration({ navigation }) {
     const [fullName, setFullName] = useState('')
@@ -20,6 +22,7 @@ export default function registration({ navigation }) {
     const [addressLatitude, setAdressLatitude] = useState('')
     const [addressLongitude, setAdressLongitude] = useState('')
     const [companyDescription, setCompanyDescription] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [isCompany, setIsCompany] = useState('No')
     const [seeAddInformation, setSeeAddInformation] = useState(false)
@@ -117,110 +120,115 @@ export default function registration({ navigation }) {
     ];
 
     const onRegisterPress = () => {
-        if (password !== confirmPassword) {
+        /*if (password !== confirmPassword) {
             alert("Passwords don't match.")
             return
-        }
+        }*/
+
+        if (regMessage.checkForm(fullName, email, password, confirmPassword, setErrorMessage)) {
+
+            if (image === null && isCompany == 'Yes') {
+                alert("Upload a picture");
+            } else {
+                if (isCompany == 'Yes') {
+                    uploadImage().then((responseImage) => {
+                        console.log(responseImage);
+                        fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=e5e4640f03c147c58545023a81e1b8e1", requestOptions)
+                            .then(response => response.json())
+                            .then(result => {
+                                console.log(urlPhoto);
+                                return result;
+                            })
+                            .catch(error => console.log('error', error))
+                            .then((responseGeometry) => {
+                                var addreLat = responseGeometry.features[0].geometry.coordinates[1];
+                                var addreLong = responseGeometry.features[0].geometry.coordinates[0];
+
+                                firebase
+                                    .auth()
+                                    .createUserWithEmailAndPassword(email, password)
+                                    .then((response) => {
+                                        const uid = response.user.uid
+                                        const data = {
+                                            id: uid,
+                                            email,
+                                            fullName,
+                                            isCompany,
+                                            address,
+                                            addreLat,
+                                            addreLong,
+                                            companyDescription,
+                                            responseImage
+                                        };
+                                        const usersRef = firebase.firestore().collection('users')
+                                        usersRef
+                                            .doc(uid)
+                                            .set(data)
+                                            .then(() => {
+                                                navigation.navigate('Account', { user: data })
+                                            })
+                                            .catch((error) => {
+                                                alert(error)
+                                            });
+                                    })
+                                    .catch((error) => {
+                                        alert(error)
+                                    });
 
 
-        if (image === null && isCompany == 'Yes') {
-            alert("Upload a picture");
-        } else {
-            if (isCompany == 'Yes') {
-                uploadImage().then((responseImage) => {
-                    console.log(responseImage);
-                    fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=e5e4640f03c147c58545023a81e1b8e1", requestOptions)
-                        .then(response => response.json())
-                        .then(result => {
-                            console.log(urlPhoto);
-                            return result;
-                        })
-                        .catch(error => console.log('error', error))
-                        .then((responseGeometry) => {
-                            var addreLat = responseGeometry.features[0].geometry.coordinates[1];
-                            var addreLong = responseGeometry.features[0].geometry.coordinates[0];
+                            }).catch((error) => {
+                                alert(error)
+                            });
+                    }).catch((error) => {
+                        alert(error)
+                    });
+                } else {
 
-                            firebase
-                                .auth()
-                                .createUserWithEmailAndPassword(email, password)
-                                .then((response) => {
-                                    const uid = response.user.uid
-                                    const data = {
-                                        id: uid,
-                                        email,
-                                        fullName,
-                                        isCompany,
-                                        address,
-                                        addreLat,
-                                        addreLong,
-                                        companyDescription,
-                                        responseImage
-                                    };
-                                    const usersRef = firebase.firestore().collection('users')
-                                    usersRef
-                                        .doc(uid)
-                                        .set(data)
-                                        .then(() => {
-                                            navigation.navigate('Account', { user: data })
-                                        })
-                                        .catch((error) => {
-                                            alert(error)
-                                        });
+                    var addreLat = '';
+                    var addreLong = '';
+                    var responseImage = '';
+                    firebase
+                        .auth()
+                        .createUserWithEmailAndPassword(email, password)
+                        .then((response) => {
+                            const uid = response.user.uid
+                            const data = {
+                                id: uid,
+                                email,
+                                fullName,
+                                isCompany,
+                                address,
+                                addreLat,
+                                addreLong,
+                                companyDescription,
+                                responseImage
+                            };
+                            const usersRef = firebase.firestore().collection('users')
+                            usersRef
+                                .doc(uid)
+                                .set(data)
+                                .then(() => {
+                                    navigation.navigate('Account', { user: data })
                                 })
                                 .catch((error) => {
                                     alert(error)
                                 });
-
-
-                        }).catch((error) => {
+                        })
+                        .catch((error) => {
                             alert(error)
                         });
-                }).catch((error) => {
-                    alert(error)
-                });
-            } else {
-
-                var addreLat = '';
-                var addreLong = '';
-                var responseImage = '';
-                            firebase
-                                .auth()
-                                .createUserWithEmailAndPassword(email, password)
-                                .then((response) => {
-                                    const uid = response.user.uid
-                                    const data = {
-                                        id: uid,
-                                        email,
-                                        fullName,
-                                        isCompany,
-                                        address,
-                                        addreLat,
-                                        addreLong,
-                                        companyDescription,
-                                        responseImage
-                                    };
-                                    const usersRef = firebase.firestore().collection('users')
-                                    usersRef
-                                        .doc(uid)
-                                        .set(data)
-                                        .then(() => {
-                                            navigation.navigate('Account', { user: data })
-                                        })
-                                        .catch((error) => {
-                                            alert(error)
-                                        });
-                                })
-                                .catch((error) => {
-                                    alert(error)
-                                });
+                }
             }
         }
 
 
-            
- 
 
-       
+
+
+
+
+
+
     }
 
     const onFooterLinkPress = () => {
@@ -371,7 +379,7 @@ export default function registration({ navigation }) {
                                         flexDirection: 'row',
                                     }}>
                                     <TouchableOpacity
-                                            style={[styles.button_Pic_Update]}
+                                        style={[styles.button_Pic_Update]}
                                         onPress={async () => {
                                             console.log('in pick photo');
                                             const r = await pickImage();
@@ -380,15 +388,15 @@ export default function registration({ navigation }) {
                                             }
                                             console.log('response', JSON.stringify(r));
                                         }}>
-                                            <Text style={styles.text_Pic_Update}> PICK PICTURE </Text>
+                                        <Text style={styles.text_Pic_Update}> PICK PICTURE </Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                            style={[styles.button_Pic_Update]}
+                                        style={[styles.button_Pic_Update]}
                                         onPress={async () => {
                                             console.log('in pick camera');
                                             setUseCamera(true);
                                         }}>
-                                            <Text style={styles.text_Pic_Update}> PICK CAMERA </Text>
+                                        <Text style={styles.text_Pic_Update}> PICK CAMERA </Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ width: '100%', alignItems: 'center' }}>
@@ -402,7 +410,7 @@ export default function registration({ navigation }) {
                             </View>
                         </>
                     )}
-                </View> ) : null
+                </View>) : null
 
                 }
 
@@ -484,7 +492,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16
     },
-     container_Pic_Update: {
+    container_Pic_Update: {
         flex: 1,
     },
     camera_Pic_Update: {

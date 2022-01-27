@@ -1,12 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, Alert,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, SafeAreaView, Button, ScrollView, Alert, TouchableOpacity } from 'react-native';
 
 import { firebase } from '../react-native-firebase/config';
 
 import { getAuth, updatePassword } from "firebase/auth";
 
 
-
+const recFromDb = require('./recensioniFromDbMessage');
 
 function recensioniFromDb() {
     const auth = getAuth();
@@ -17,26 +17,31 @@ function recensioniFromDb() {
     const [caricato, setCaricato] = useState(false);
 
     const [recensioni, setRecensioni] = useState([])
-    const [newPost, setNewPost] = useState(null);
+    const [newPost, setNewPost] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const editValue = null;
-    const editRecensione = (editValue) => {
-        try {
-            const db = firebase.firestore();
-            db.collection('recensioni')
-                .doc(editValue)
-                .update({
-                    Post: newPost,
-                })
-                .then(() => {
-                    Alert.alert('post aggiornato !');
-                })
 
-            setEdit(true);
-            setNewPost('');
-        }
-        catch (e) {
-            Alert.alert('qualocsa è andato storto', e.message);
+    const editRecensione = (editValue) => {
+
+        if (recFromDb.checkForm(newPost, setErrorMessage)) {
+            try {
+                const db = firebase.firestore();
+                db.collection('recensioni')
+                    .doc(editValue)
+                    .update({
+                        Post: newPost,
+                    })
+                    .then(() => {
+                        Alert.alert('post aggiornato !');
+                    })
+
+                setEdit(true);
+                setNewPost('');
+            }
+            catch (e) {
+                Alert.alert('qualocsa è andato storto', e.message);
+            }
         }
 
     }
@@ -112,8 +117,10 @@ function recensioniFromDb() {
                                         <View>
                                             <TextInput
                                                 style={styles.input}
-                                                placeholder='Recensione'
+                                                placeholder='review'
                                                 placeholderTextColor="#aaaaaa"
+                                                multiline
+                                                numberOfLines={5}
                                                 onChangeText={(text) => setNewPost(text)}
                                                 value={newPost}
                                                 underlineColorAndroid="transparent"
@@ -218,7 +225,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold"
     },
-    footer:{
+    footer: {
         marginBottom: '5%'
     }
 })

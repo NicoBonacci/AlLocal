@@ -13,15 +13,16 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { ScrollView } from 'react-native-gesture-handler';
 
-
+const editAziendaMessage = require('./editBioAziendaMessage')
 
 export default function App({ route }) {
 
     const [newDescrizione, setNewDescrizione] = useState('');
-    
+
     const [newNomeProdotto, setNewNomeProdotto] = useState('');
     const [newPrezzo, setNewPrezzo] = useState('');
     const [newVoti, setNewVoti] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
 
     const [hasPermission, setHasPermission] = useState(null);
@@ -40,12 +41,12 @@ export default function App({ route }) {
 
     const uploadImage = async () => {
 
-       
+
         if (image != null) {
             // funzione per cancellare l'immagine che ce nel db.
             //const storageRef = firebase.storage().refFromURL(route.params.Foto);
 
-// funzione cancella foto non funziona quindi per il moemnto la lascio cosi 
+            // funzione cancella foto non funziona quindi per il moemnto la lascio cosi 
 
             /*const imageRef = firebase.storage().ref().child("images/" + route.params.Foto);
             imageRef.delete()
@@ -62,7 +63,7 @@ export default function App({ route }) {
             const response = await fetch(newUri);
             const blob = await response.blob();
             var ref = firebase.storage().ref().child("images/" + fileName);
-            
+
             const snapshot = await ref.put(blob);
             setUploading(false);
             const imgUrl = await snapshot.ref.getDownloadURL();
@@ -108,51 +109,57 @@ export default function App({ route }) {
 
 
     const saveProdotto = () => {
-        uploadImage().then((resultImage) => {
-            console.log(resultImage);
-            if (resultImage != null) {
-                try {
-                    const db = firebase.firestore();
-                    db.collection("users")
-                        .doc(currentUser.uid)
-                        .update({
-                            responseImage: resultImage,
-                        })
-                        .then(() => {
-                            console.log('foto aggiornata');
-                        })
-                } catch (err) {
-                    console.log('qualcosa non ha funzionato');
+
+        if (editAziendaMessage.checkForm(newDescrizione, setErrorMessage)) {
+            uploadImage().then((resultImage) => {
+                console.log(resultImage);
+                if (resultImage != null) {
+                    try {
+                        const db = firebase.firestore();
+                        db.collection("users")
+                            .doc(currentUser.uid)
+                            .update({
+                                responseImage: resultImage,
+                            })
+                            .then(() => {
+                                console.log('foto aggiornata');
+                            })
+                    } catch (err) {
+                        console.log('qualcosa non ha funzionato');
+                    }
                 }
-            }
-            if (newDescrizione != '') {
-                try {
-                    const db = firebase.firestore();
-                    db.collection("users")
-                        .doc(currentUser.uid)
-                        .update({
-                            companyDescription: newDescrizione,
-                        })
-                        .then(() => {
-                            console.log('descrizione aggiornata');
-                        })
+                if (newDescrizione != '') {
+                    try {
+                        const db = firebase.firestore();
+                        db.collection("users")
+                            .doc(currentUser.uid)
+                            .update({
+                                companyDescription: newDescrizione,
+                            })
+                            .then(() => {
+                                console.log('descrizione aggiornata');
+                            })
+                    }
+                    catch {
+                        console.log('qualcosa non ha funzionato');
+                    }
                 }
-                catch {
-                    console.log('qualcosa non ha funzionato');
-                }
-            }
-            
-        })
+
+            })
+        }
+
+
+
     }
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                
+
                 <View>
                     <TextInput
                         style={styles.input}
-                        placeholder="inserisci qui la nuova biografia"
+                        placeholder="insert here new biography"
                         placeholderTextColor="#aaaaaa"
                         multiline
                         numberOfLines={5}

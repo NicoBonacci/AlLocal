@@ -11,19 +11,27 @@ import { doc, waitForPendingWrites } from 'firebase/firestore';
 import { Slider } from 'react-native-elements';
 import { getAuth, updatePassword } from 'firebase/auth';
 
+const cambPassMessage = require('./cambioPasswordMessage')
+
 export default function App({ navigation, route }) {
 
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     const auth = getAuth();
     const user = auth.currentUser;
-    
+
     const onChangePasswordPress = () => {
-        updatePassword(user, password).then(() => {
-            alert("Your password has been updated");
-            console.log("Cambiata password in %s", password)
-        }).catch((error) => {
-            alert(error)
-        });
+
+        if (cambPassMessage.checkForm(password, confirmPassword, setErrorMessage)) {
+            updatePassword(user, password).then(() => {
+                alert("Your password has been updated");
+                console.log("Cambiata password in %s", password)
+            }).catch((error) => {
+                alert(error)
+            });
+        }
 
     }
 
@@ -38,6 +46,17 @@ export default function App({ navigation, route }) {
                     placeholder='Insert new password'
                     onChangeText={(text) => setPassword(text)}
                     value={password}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholderTextColor="#aaaaaa"
+                    secureTextEntry
+                    placeholder='Confirm Password'
+                    onChangeText={(text) => setConfirmPassword(text)}
+                    value={confirmPassword}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />

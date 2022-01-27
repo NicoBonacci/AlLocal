@@ -4,9 +4,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../react-native-firebase/config';
 import * as Facebook from 'expo-facebook';
 
+const logMessage = require('./loginMessage');
+
 export default function login({ navigation }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
+
     const appId = '947901972794896';
 
     const onFooterLinkPress = () => {
@@ -15,7 +19,7 @@ export default function login({ navigation }) {
 
     const onLoginFacebookPress = async () => {
         try {
-   
+
             await Facebook.initializeAsync({
                 appId: '947901972794896'
             }) // enter your Facebook App Id
@@ -43,32 +47,35 @@ export default function login({ navigation }) {
     }
 
 
-    
     const onLoginPress = () => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .get()
-                    .then(firestoreDocument => {
-                        if (!firestoreDocument.exists) {
-                            alert("User does not exist anymore.")
-                            return;
-                        }
-                        const user = firestoreDocument.data()
-                        navigation.navigate('Account', { user })
-                    })
-                    .catch(error => {
-                        alert(error)
-                    });
-            })
-            .catch(error => {
-                alert(error)
-            })
+
+        if (logMessage.checkForm(email, password, setErrorMessage)) {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then((response) => {
+                    const uid = response.user.uid
+                    const usersRef = firebase.firestore().collection('users')
+                    usersRef
+                        .doc(uid)
+                        .get()
+                        .then(firestoreDocument => {
+                            if (!firestoreDocument.exists) {
+                                alert("User does not exist anymore.")
+                                return;
+                            }
+                            const user = firestoreDocument.data()
+                            navigation.navigate('Account', { user })
+                        })
+                        .catch(error => {
+                            alert(error)
+                        });
+                })
+                .catch(error => {
+                    alert(error)
+                })
+        }
+
     }
 
     return (

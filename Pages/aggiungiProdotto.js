@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { ScrollView } from 'react-native-gesture-handler';
 
-
+const editProdMessage = require('./editProdottoMessaggio')
 
 export default function App({ navigation }) {
 
@@ -22,6 +22,8 @@ export default function App({ navigation }) {
     const [nomeProdotto, setNomeProdotto] = useState('');
     const [prezzo, setPrezzo] = useState('');
     const [voti, setVoti] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [hasPermission, setHasPermission] = useState(null);
     const [image, setImage] = useState(null);
@@ -33,7 +35,7 @@ export default function App({ navigation }) {
     const [uploading, setUploading] = useState(false);
     const [transfered, setTransfered] = useState(0);
 
-    
+
 
     const currentUser = firebase.auth().currentUser;
 
@@ -95,35 +97,40 @@ export default function App({ navigation }) {
 
 
     const saveProdotto = () => {
-        uploadImage().then((responseImage) => {
-            console.log(responseImage);
-            try {
-                const pid = firebase.firestore().collection("prodotti").doc().id;
-                const db = firebase.firestore();
-                db.collection("prodotti")
-                    .doc(pid)
-                    .set({
-                        Prodottoid: pid,
-                        AziendaId: currentUser.uid,
-                        Descrizione: descrizione,
-                        Nome: nomeProdotto,
-                        MediaVoto: null,
-                        Prezzo: parseInt(prezzo),
-                        Foto: responseImage,
-                        imageUrl: urlPhoto
-                    })
-                    .then(() => {
-                        Alert.alert('prodotto inserito !');
-                    })
-                setDescrizione('');
-                setNomeProdotto('');
-                setPrezzo('');
-                setImmagine('');
-                setPrezzo('');
-            } catch (err) {
-                Alert.alert("there is something go wrong", err.messsage);
-            }
-        })
+        if (editProdMessage.checkForm(nomeProdotto, descrizione, prezzo, setErrorMessage)) {
+            uploadImage().then((responseImage) => {
+                console.log(responseImage);
+                try {
+                    const pid = firebase.firestore().collection("prodotti").doc().id;
+                    const db = firebase.firestore();
+                    db.collection("prodotti")
+                        .doc(pid)
+                        .set({
+                            Prodottoid: pid,
+                            AziendaId: currentUser.uid,
+                            Descrizione: descrizione,
+                            Nome: nomeProdotto,
+                            MediaVoto: null,
+                            Prezzo: parseInt(prezzo),
+                            Foto: responseImage,
+                            imageUrl: urlPhoto
+                        })
+                        .then(() => {
+                            Alert.alert('prodotto inserito !');
+                        })
+                    setDescrizione('');
+                    setNomeProdotto('');
+                    setPrezzo('');
+                    setImmagine('');
+                    setPrezzo('');
+                } catch (err) {
+                    Alert.alert("there is something go wrong", err.messsage);
+                }
+            })
+        }
+
+
+
     }
 
 
