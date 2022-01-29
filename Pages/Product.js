@@ -95,6 +95,9 @@ export default function App({ navigation, route }) {
                         <Text style={styles.prodottoText}>
                             {route.params.descProd}
                         </Text>
+                        <Text style={styles.prodottoText}>
+                            Average of grade: {valueRec}
+                        </Text>
                     </ScrollView>
                 </View>
             </View>
