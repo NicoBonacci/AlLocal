@@ -33,14 +33,14 @@ function recensioniFromDb() {
                         Post: newPost,
                     })
                     .then(() => {
-                        Alert.alert('post aggiornato !');
+                        Alert.alert('post updated !');
                     })
 
                 setEdit(true);
                 setNewPost('');
             }
             catch (e) {
-                Alert.alert('qualocsa è andato storto', e.message);
+                Alert.alert('something went wrong', e.message);
             }
         }
 
@@ -90,13 +90,13 @@ function recensioniFromDb() {
                 .doc(value)
                 .delete()
                 .then(() => {
-                    Alert.alert('post cancellato !');
+                    Alert.alert('post deleted !');
                 })
 
             setDeleted(true);
         }
         catch (e) {
-            Alert.alert('qualocsa è andato storto', e.message);
+            Alert.alert('something went wrong', e.message);
         }
     }
 
@@ -117,7 +117,7 @@ function recensioniFromDb() {
                                         <View>
                                             <TextInput
                                                 style={styles.input}
-                                                placeholder='review'
+                                                placeholder='modify review'
                                                 placeholderTextColor="#aaaaaa"
                                                 multiline
                                                 numberOfLines={5}

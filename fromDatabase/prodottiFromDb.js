@@ -126,7 +126,7 @@ export default function ProdottiFromDb() {
                                                 style={styles.button}
                                                 onPress={() => navigation.navigate("Edit Prodotto",
                                                     { desc: prodotto.Descrizione, idProdotto: prodotto.Prodottoid, name: prodotto.Nome, prezzo: prodotto.Prezzo, immagine: prodotto.Foto })}>
-                                                <Text style={styles.buttonTitle}>modifica prodotto</Text>
+                                                <Text style={styles.buttonTitle}>Modify product</Text>
                                             </TouchableOpacity>
                                         </View>
 

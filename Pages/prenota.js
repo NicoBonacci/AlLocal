@@ -26,7 +26,7 @@ export default function Prenota ({ navigation, route })  {
     
             <View style={styles.main}>
                 <View style={styles.title}>
-                    <Text style={{ fontSize: 20, textAlign: 'center' }}>Stai ordinando: {route.params.nomeProd} </Text>
+                    <Text style={{ fontSize: 20, textAlign: 'center' }}>You are ordering: {route.params.nomeProd} </Text>
                 </View>
 
                 <View style={styles.up}>

@@ -18,6 +18,8 @@ export default function App({ navigation, route }) {
 
     const [allReview, setAllReview] = useState([]);
     const [downloadReview, setDownloadReview] = useState(false);
+    var [valueRec, setValueRec] = useState(0);
+    var [numRec, setNumRec] = useState(0);
 
     const fetchProdotti = async () => {
         firebase.firestore().collection('recensioni')
@@ -49,7 +51,33 @@ export default function App({ navigation, route }) {
     useEffect(() => {
         fetchProdotti();
         setDownloadReview(false);
+        setValue();
     }, [downloadReview])
+
+    const setValue = () => {
+        if (valueRec == 0) {
+            var numRecProv = 0
+            var valueRecProv = 0
+            allReview.forEach(review => {
+                numRecProv = numRecProv + 1
+                valueRecProv = review.voto + valueRecProv;
+
+                console.log("Le recensioni sono:");
+
+                console.log(numRecProv);
+                console.log("Il valore della recensione è:");
+                console.log(review.voto);
+            });
+            if (numRecProv != 0) {
+                var media = valueRecProv / numRecProv;
+                media = media / 100
+                setValueRec(valueRecProv);
+
+                console.log("Il valore è:");
+                console.log(valueRec);
+            }
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -104,7 +132,7 @@ export default function App({ navigation, route }) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}>
-                        <Text style={styles.buttonTitle}>Recensione</Text>
+                        <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
 
                     :
@@ -112,7 +140,7 @@ export default function App({ navigation, route }) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}>
-                        <Text style={styles.buttonTitle}>Recensione</Text>
+                        <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
                 }
 
@@ -121,7 +149,7 @@ export default function App({ navigation, route }) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
-                        <Text style={styles.buttonTitle}>Prenota</Text>
+                        <Text style={styles.buttonTitle}>Reserve</Text>
                     </TouchableOpacity>
 
                     :
@@ -129,7 +157,7 @@ export default function App({ navigation, route }) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
-                        <Text style={styles.buttonTitle}>Prenota</Text>
+                        <Text style={styles.buttonTitle}>Reserve</Text>
                     </TouchableOpacity>
 
                 }

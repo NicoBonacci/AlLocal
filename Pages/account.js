@@ -23,7 +23,7 @@ export default function Account(props) {
     const [oneChange, setOneChange] = useState(false);
 
     //Prodotti se azienda recensioni se utente
-    const [varNameList, setVarNameList] = useState('Recensioni');
+    const [varNameList, setVarNameList] = useState('Review');
     const [password, setPassword] = useState('');
     const [isuser, setIsUser] = useState(true);
 
@@ -32,7 +32,7 @@ export default function Account(props) {
 
     if (props.extraData.isCompany == 'Yes' && oneChange == false) {
         setOneChange(true);
-        setVarNameList('Prodotti');
+        setVarNameList('Product');
         setIsUser(false);
     }
     const onChangePasswordPress = () => {
@@ -75,7 +75,7 @@ export default function Account(props) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => props.navigation.navigate("Cambio Password")}>
-                        <Text style={styles.buttonTitle}>Cambio password</Text>
+                        <Text style={styles.buttonTitle}>Change password</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -96,13 +96,13 @@ export default function Account(props) {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => props.navigation.navigate("Aggiungi prodotto")}>
-                                <Text style={styles.buttonTitle}>Aggiungi prodotto</Text>
+                                <Text style={styles.buttonTitle}>Add product</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => props.navigation.navigate("Modifica biografia")}>
-                                <Text style={styles.buttonTitle}>modifica biografia </Text>
+                                <Text style={styles.buttonTitle}>Edit biography</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -194,11 +194,12 @@ const styles = StyleSheet.create({
     titolorec: {
         flex: 0.75,
         backgroundColor: '#C6EBBE',
+
     },
     textRecensione: {
         color: '#000',
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 25
 
     },
 

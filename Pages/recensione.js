@@ -16,7 +16,7 @@ export default function App({ navigation, route }) {
   const currentUser = firebase.auth().currentUser;
 
   const [update, setUpdate] = useState(false);
-  const [valutazione, setValutazione] = useState('');
+  const [valutazione, setValutazione] = useState('0');
 
   const prodId = route.params.prodottoId;
 
@@ -45,7 +45,7 @@ export default function App({ navigation, route }) {
                   voto: parseInt(valutazione),
                 })
                 .then(() => {
-                  Alert.alert('post inserito!');
+                    Alert.alert('Post inserted!');
                 })
               setPost('');
             } catch (err) {
@@ -67,10 +67,10 @@ export default function App({ navigation, route }) {
     <View style={styles.container}>
 
       <View>
-        <Text style={styles.title}>Recesnsione:</Text>
+        <Text style={styles.title}>Write a review:</Text>
         <TextInput
           style={styles.input}
-          placeholder='Recensione'
+          placeholder='Review'
           placeholderTextColor="#aaaaaa"
           multiline
           numberOfLines={5}
@@ -81,11 +81,12 @@ export default function App({ navigation, route }) {
       </View>
 
       <View>
-        <Text style={styles.title}>Valutazione:</Text>
+        <Text style={styles.title}>Evaluation:</Text>
         <Slider
           style={{ width: 300, marginLeft: 40, marginRight: 25 }}
-          minimumValue={1}
+          minimumValue={0}
           maximumValue={5}
+          initialValue={0}
           thumbTintColor='#D95D39'
           maximumTrackTintColor='#000'
           minimumTrackTintColor='#000'

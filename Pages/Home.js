@@ -227,6 +227,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         height: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     center: {
         width: '100%',
@@ -237,7 +239,6 @@ const styles = StyleSheet.create({
     down: {
         width: '100%',
         height: '30%',
-
     },
     up_logo: {
         width: '20%',
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     up_search: {
-        width: '80%',
+        width: '90%',
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
