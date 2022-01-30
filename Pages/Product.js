@@ -139,9 +139,7 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => 
-                            navigation.navigate('Recensione', { prodottoId: prodId })
-                        }>
+                        onPress={() => navigation.navigate('login')}>
                         <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
                 }
@@ -158,7 +156,7 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
+                        onPress={() => navigation.navigate('login')}>
                         <Text style={styles.buttonTitle}>Reserve</Text>
                     </TouchableOpacity>
 
