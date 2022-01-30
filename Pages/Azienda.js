@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View,Image } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LogBox } from 'react-native';
 
 import { firebase } from '../react-native-firebase/config'
 
@@ -11,6 +12,10 @@ export default function App({ navigation, route }) {
     const [allProducts, setAllProducts] = useState([]);
     const [downloadProduct, setDownloadProduct] = useState(false);
     var mailAz = route.params.mail;
+
+    //ignora il problema Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component."]);
+
 
     const fetchAzienda = async () => {
         firebase.firestore().collection('prodotti')

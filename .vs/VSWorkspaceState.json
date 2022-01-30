@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\fromDatabase",
-    "\\Pages",
+    "\\react-native-firebase",
     "\\test"
   ],
+  "SelectedNode": "\\react-native-firebase\\config.js",
   "PreviewInSolutionExplorer": false
 }
