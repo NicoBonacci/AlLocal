@@ -5,16 +5,16 @@ test('mancano tutti i campi', () => {
 })
 
 test('manca il campo nome del prodotto', () => {
-    expect(formUtils.checkForm("nuova bio prodotto", "2", () => { })).toBeFalsy();
+    expect(formUtils.checkForm("bio del prodotto", "2", () => { })).toBeFalsy();
 })
 test('manca il campo descrizione del prodotto', () => {
     expect(formUtils.checkForm("nome prodotto", "2", () => { })).toBeFalsy();
 })
 
 test('manca il campo prezzo del prodotto', () => {
-    expect(formUtils.checkForm("nome prodotto", "nuova bio prodotto", () => { })).toBeFalsy();
+    expect(formUtils.checkForm("nome prodotto", "bio prodotto", () => { })).toBeFalsy();
 })
 
 test('inserimento di un nuovo prodotto', () => {
-    expect(formUtils.checkForm("nome prodotto", "nuova bio prodotto", "1", () => { })).toBeTruthy();
+    expect(formUtils.checkForm("nome prodotto", "bio prodotto", "1", () => { })).toBeTruthy();
 })

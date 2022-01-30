@@ -42,6 +42,8 @@ function recensioniFromDb() {
             catch (e) {
                 Alert.alert('something went wrong', e.message);
             }
+        }else{
+            Alert.alert(errorMessage);
         }
 
     }

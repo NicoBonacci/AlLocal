@@ -146,6 +146,8 @@ export default function App({ route }) {
                 }
 
             })
+        }else{
+            Alert.alert(errorMessage);
         }
 
 

@@ -130,7 +130,7 @@ export default function App({ navigation, route }) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => 
-                            navigation.navigate('Recensione', { prodottoId: prodId })
+                            navigation.navigate('Review', { prodottoId: prodId })
                         }>
                         <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
@@ -139,7 +139,7 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('login')}>
+                        onPress={() => navigation.navigate('Login')}>
                         <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
                 }
@@ -148,7 +148,7 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Prenota', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
+                        onPress={() => navigation.navigate('Reserve', { nomeProd: route.params.nome, photo: route.params.photo, descProdotto: route.params.descProd, prezzo: route.params.prezzo, mailAz: route.params.emailAz })}>
                         <Text style={styles.buttonTitle}>Reserve</Text>
                     </TouchableOpacity>
 
@@ -156,7 +156,7 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('login')}>
+                        onPress={() => navigation.navigate('Login')}>
                         <Text style={styles.buttonTitle}>Reserve</Text>
                     </TouchableOpacity>
 

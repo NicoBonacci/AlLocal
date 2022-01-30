@@ -74,7 +74,7 @@ export default function Account(props) {
                 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => props.navigation.navigate("Cambio Password")}>
+                        onPress={() => props.navigation.navigate("Change Password")}>
                         <Text style={styles.buttonTitle}>Change password</Text>
                     </TouchableOpacity>
 
@@ -95,13 +95,13 @@ export default function Account(props) {
                         <View style={styles.centerButton}>
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => props.navigation.navigate("Aggiungi prodotto")}>
+                                onPress={() => props.navigation.navigate("Add Product")}>
                                 <Text style={styles.buttonTitle}>Add product</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => props.navigation.navigate("Modifica biografia")}>
+                                onPress={() => props.navigation.navigate("Edit Biography")}>
                                 <Text style={styles.buttonTitle}>Edit biography</Text>
                             </TouchableOpacity>
                         </View>

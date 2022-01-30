@@ -31,6 +31,8 @@ export default function App({ navigation, route }) {
             }).catch((error) => {
                 alert(error)
             });
+        }else{
+            Alert.alert(errorMessage);
         }
 
     }
@@ -68,7 +70,7 @@ export default function App({ navigation, route }) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onChangePasswordPress()}>
-                    <Text style={styles.buttonTitle}>Cambia password</Text>
+                    <Text style={styles.buttonTitle}>Change Password</Text>
                 </TouchableOpacity>
             </View>
 

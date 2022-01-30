@@ -191,7 +191,7 @@ export default function App({ navigation }) {
                     }
                     {showDetails ?
                         <View style={styles.down}>
-                            <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Azienda', { desc: descAzienda, id: idAzienda, name: companyName, mail: mail })}>
+                            <TouchableOpacity style={styles.down_company} onPress={() => navigation.navigate('Company', { desc: descAzienda, id: idAzienda, name: companyName, mail: mail })}>
                                 <Text style={styles.textCompany}>{companyName}</Text>
                                 <Image style={styles.picCompanyDimension} source={{ uri: urlOfImage }} />
                             </TouchableOpacity>

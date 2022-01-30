@@ -6,8 +6,8 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import Home from "./Home";
 import Azienda from "./Azienda";
 import Product from "./Product";
-import Recensione from "./recensione";
-import Prenota from "./prenota";
+import Review from "./recensione";
+import Reserve from "./prenota";
 
 import login from "./login";
 import Login from "./login";
@@ -58,7 +58,7 @@ export default function App({ navigation }) {
   return (
     <Stack.Navigator>
       <Stack.Screen name=" " component={Home} options={{headerShown: false}}/>
-      <Stack.Screen name="Azienda" component={Azienda} />
+      <Stack.Screen name="Company" component={Azienda} />
   
       <Stack.Screen name="Product" component={Product} />
 
@@ -67,24 +67,24 @@ export default function App({ navigation }) {
       PER DEVO FARE IN MODO CHE MI REINDIRIZZI ALLA PAGINA SE UTENTE NON è COLLEGATO INVECE CHE QUESTO*/}
 
       {user ? (
-        <Stack.Screen name="Recensione">
-          {props => <Recensione {...props} extraData={user} />}
+        <Stack.Screen name="Review">
+          {props => <Review {...props} extraData={user} />}
         </Stack.Screen>
       ) : (
         <>
           <Stack.Screen name="login" component={login} />
-          <Stack.Screen name="registratione" component={registrazione} />
+          <Stack.Screen name="signup" component={registrazione} />
         </>
       )}
 
       {user ? (
-        <Stack.Screen name="Prenota">
-          {props => <Prenota {...props} extraData={user} />}
+        <Stack.Screen name="Reserve">
+          {props => <Reserve {...props} extraData={user} />}
         </Stack.Screen>
       ) : (
         <>
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Registrazione" component={Registrazione} />
+          <Stack.Screen name="Signup" component={Registrazione} />
         </>
       )}
 

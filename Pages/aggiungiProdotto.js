@@ -127,6 +127,8 @@ export default function App({ navigation }) {
                     Alert.alert("there is something go wrong", err.messsage);
                 }
             })
+        }else{
+            Alert.alert(errorMessage);
         }
 
 

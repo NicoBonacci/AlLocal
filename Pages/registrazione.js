@@ -219,6 +219,8 @@ export default function registration({ navigation }) {
                         });
                 }
             }
+        }else{
+            Alert.alert(errorMessage);
         }
 
 

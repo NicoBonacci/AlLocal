@@ -81,13 +81,13 @@ export default function App({ navigation }) {
           <Stack.Screen name="account" options={{headerShown: false}}>
             {props => <Account {...props} extraData={user} />}
           </Stack.Screen>
-          <Stack.Screen name="Aggiungi prodotto">
+          <Stack.Screen name="Add Product">
             {props => <AggiungiProdotto {...props} extraData={user} />}
           </Stack.Screen>
 
-          <Stack.Screen name="Modifica biografia" component={EditBioAzienda} />
+          <Stack.Screen name="Edit Biography" component={EditBioAzienda} />
           <Stack.Screen name="Edit Prodotto" component={EditProdotto} />
-          <Stack.Screen name="Cambio Password" >
+          <Stack.Screen name="Change Password" >
             {props => <CambioPassword {...props} extraData={user} />}
           </Stack.Screen>
           
@@ -95,8 +95,8 @@ export default function App({ navigation }) {
         </>
       ) : (
         <>
-          <Stack.Screen name="login" component={login} />
-          <Stack.Screen name="registrazione" component={registrazione} />
+          <Stack.Screen name="Login" component={login} />
+          <Stack.Screen name="Signup" component={registrazione} />
         </>
       )}
     </Stack.Navigator>
