@@ -56,25 +56,20 @@ export default function App({ navigation, route }) {
 
     const setValue = () => {
         if (valueRec == 0) {
-            var numRecProv = 0
-            var valueRecProv = 0
+            var numRecProv = parseInt("0")
+            var valueRecProv = parseInt("0")
             allReview.forEach(review => {
                 numRecProv = numRecProv + 1
-                valueRecProv = review.voto + valueRecProv;
+                valueRecProv = parseInt(review.voto)  + valueRecProv;
 
-                console.log("Le recensioni sono:");
 
-                console.log(numRecProv);
-                console.log("Il valore della recensione è:");
-                console.log(review.voto);
             });
             if (numRecProv != 0) {
                 var media = valueRecProv / numRecProv;
-                media = media / 100
-                setValueRec(valueRecProv);
 
-                console.log("Il valore è:");
-                console.log(valueRec);
+                media = Math.round(media * 100) /100
+
+                setValueRec(media);
             }
         }
     }
@@ -96,7 +91,7 @@ export default function App({ navigation, route }) {
                             {route.params.descProd}
                         </Text>
                         <Text style={styles.prodottoText}>
-                            Average of grade: {valueRec}
+                            {"\n"}Average of grade: {valueRec}
                         </Text>
                     </ScrollView>
                 </View>
@@ -134,7 +129,9 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}>
+                        onPress={() => 
+                            navigation.navigate('Recensione', { prodottoId: prodId })
+                        }>
                         <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
 
@@ -142,7 +139,9 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Recensione', { prodottoId: prodId })}>
+                        onPress={() => 
+                            navigation.navigate('Recensione', { prodottoId: prodId })
+                        }>
                         <Text style={styles.buttonTitle}>Make review</Text>
                     </TouchableOpacity>
                 }
@@ -207,6 +206,8 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 18,
         textAlign: 'center',
+        padding: 10,
+
     },
     containerRecensioni: {
         flex: 2,
