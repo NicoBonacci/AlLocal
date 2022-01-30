@@ -12,13 +12,13 @@ if (Platform.OS === 'ios') {
 
 
     const firebaseConfig = {
-        apiKey: "AIzaSyAdDMHfjlTriiXTJ1AWonSNacmTrUdtX0w",
-        authDomain: "allocal2.firebaseapp.com",
-        databaseURL: "https://allocal2.firebaseio.com",
-        projectId: "allocal2",
-        storageBucket: "allocal2.appspot.com",
+        apiKey: "AIzaSyBNmEhhJfpcLIHePMfmvt8g- etv7dB9w5s",
+        authDomain: "allocal.firebaseapp.com",
+        databaseURL: "https://allocal.firebaseio.com",
+        projectId: "allocal",
+        storageBucket: "allocal.appspot.com",
         messagingSenderId: "240425908193",
-        appId: "1:804473380410:ios:f1765eac8d385ed526df03",
+        appId: "1:240425908193:ios:03e402db60637a7ef904a0",
     };
     app = firebase.initializeApp(firebaseConfig);
 
