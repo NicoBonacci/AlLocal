@@ -18,7 +18,7 @@ import login from "./login";
 import registrazione from "./registrazione";
 import AggiungiProdotto from "./aggiungiProdotto.js";
 import Account from "./account";
-import EditProdotto from "./editProdotto";
+import EditProduct from "./editProdotto";
 import EditBioAzienda from "./editBioAzienda";
 import CambioPassword from "./cambioPassword";
 
@@ -86,7 +86,7 @@ export default function App({ navigation }) {
           </Stack.Screen>
 
           <Stack.Screen name="Edit Biography" component={EditBioAzienda} />
-          <Stack.Screen name="Edit Prodotto" component={EditProdotto} />
+          <Stack.Screen name="Edit Product" component={EditProduct} />
           <Stack.Screen name="Change Password" >
             {props => <CambioPassword {...props} extraData={user} />}
           </Stack.Screen>
