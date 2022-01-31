@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
         // qui si puo modificare il rettangolino che viene fuori dell'azienda
     },
     textCompany: {
-        fontSize: 25,
+        fontSize: 23,
         margin:'3%',
         textAlign:'center',
 

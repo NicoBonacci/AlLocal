@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Pages",
     "\\react-native-firebase",
-    "\\test"
+    "\\test",
+    "\\test\\__snapshots__"
   ],
-  "SelectedNode": "\\react-native-firebase\\config.js",
+  "SelectedNode": "\\test\\__snapshots__\\component.test.js.snap",
   "PreviewInSolutionExplorer": false
 }
