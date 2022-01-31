@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View,Image } from 'react-native';
+import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LogBox } from 'react-native';
@@ -96,10 +96,11 @@ export default function App({ navigation, route }) {
                                         <Image source={{ uri: product.urlPhotoProd }}
                                             style={styles.image}>
                                         </Image>
-
-                                        <Text style={styles.prodottoText}>
-                                            {product.nome}
-                                        </Text>
+                                        <ScrollView>
+                                            <Text style={styles.prodottoText}>
+                                                {product.nome}
+                                            </Text>
+                                        </ScrollView>
                                     </View>
 
                                 </TouchableOpacity>
