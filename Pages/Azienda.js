@@ -97,9 +97,12 @@ export default function App({ navigation, route }) {
                                             style={styles.image}>
                                         </Image>
                                         <ScrollView>
+                                            <TouchableOpacity
+                                             onPress={() => navigation.navigate('Product', { descProd: product.descrizione, photo: product.urlPhotoProd, nome: product.nome, id: product.idProd, prezzo: product.prezzo, emailAz: mailAz })}>
                                             <Text style={styles.prodottoText}>
                                                 {product.nome}
                                             </Text>
+                                            </TouchableOpacity>
                                         </ScrollView>
                                     </View>
 
