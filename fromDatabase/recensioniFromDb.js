@@ -92,7 +92,7 @@ function recensioniFromDb() {
                 .doc(value)
                 .delete()
                 .then(() => {
-                    Alert.alert('post deleted !');
+                    Alert.alert('Review deleted !');
                 })
 
             setDeleted(true);

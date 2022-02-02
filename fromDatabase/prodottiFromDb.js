@@ -69,7 +69,7 @@ export default function ProdottiFromDb() {
                 .doc(value)
                 .delete()
                 .then(() => {
-                    Alert.alert('post cancellato !');
+                    Alert.alert('Product deleted !');
                 })
 
             setDeleted(true);
@@ -117,7 +117,7 @@ export default function ProdottiFromDb() {
                                             <TouchableOpacity
                                                 style={styles.button}
                                                 onPress={() => deleteProdotto(prodotto.Prodottoid)}>
-                                                <Text style={styles.buttonTitle}>X</Text>
+                                                <Text style={styles.buttonTitle}>Delete</Text>
                                             </TouchableOpacity>
                                         </View>
 

@@ -26,7 +26,7 @@ export default function App({ navigation, route }) {
 
         if (cambPassMessage.checkForm(password, confirmPassword, setErrorMessage)) {
             updatePassword(user, password).then(() => {
-                alert("Your password has been updated");
+                Alert.alert("Your password has been updated");
                 console.log("Cambiata password in %s", password)
             }).catch((error) => {
                 alert(error)

@@ -45,7 +45,7 @@ export default function App({ navigation, route }) {
                   voto: parseInt(valutazione),
                 })
                 .then(() => {
-                    Alert.alert('Post inserted!');
+                    Alert.alert('Review inserted!');
                 })
               setPost('');
             } catch (err) {
